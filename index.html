@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U.S. Age Assurance Laws: Updated Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-mid: #3d3d3d;
+    --ink-light: #6b6b6b;
+    --paper: #faf8f4;
+    --rule: #d8d3ca;
+    --rule-heavy: #b8b0a2;
+    --accent: #c0392b;
+    --accent-warm: #e67e22;
+
+    /* Status colors */
+    --status-active: #1a5c2a;
+    --status-active-bg: #e8f5ec;
+    --status-enjoined: #7b1a1a;
+    --status-enjoined-bg: #fdecea;
+    --status-partial: #7a4a00;
+    --status-partial-bg: #fff4e0;
+    --status-rulemaking: #1a3a6b;
+    --status-rulemaking-bg: #e6edf8;
+    --status-pending: #4a1a6b;
+    --status-pending-bg: #f2eaf8;
+    --status-federal: #1a4040;
+    --status-federal-bg: #e6f2f2;
+
+    /* Platform colors */
+    --plat-adult: #5c2d6b;
+    --plat-social: #1a4a7a;
+    --plat-all: #1a5c2a;
+    --plat-appstore: #7a3a00;
+    --plat-ai: #5a1a1a;
+    --plat-federal: #1a4040;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  .masthead {
+    border-bottom: 3px solid var(--ink);
+    padding: 32px 40px 24px;
+    background: var(--paper);
+  }
+  .masthead-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    max-width: 740px;
+  }
+  .masthead-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--ink-mid);
+    max-width: 680px;
+    line-height: 1.6;
+  }
+  .masthead-meta {
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+    border-top: 1px solid var(--rule);
+    padding-top: 12px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Controls ── */
+  .controls {
+    padding: 16px 40px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .controls label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-right: 6px;
+  }
+  .controls select {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12.5px;
+    padding: 5px 28px 5px 10px;
+    border: 1px solid var(--rule-heavy);
+    background: white;
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6b6b'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 9px center;
+    border-radius: 2px;
+  }
+  .controls select:focus { outline: 1px solid var(--accent); }
+
+  .count-badge {
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-light);
+  }
+  .count-badge span {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ── Legend ── */
+  .legend {
+    padding: 12px 40px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-right: 4px;
+  }
+  .legend-items {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── Table wrapper ── */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 0 40px 40px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 1100px;
+    border-collapse: collapse;
+    margin-top: 24px;
+  }
+
+  /* Column group lines */
+  colgroup col { }
+
+  thead tr {
+    border-bottom: 2px solid var(--ink);
+  }
+  thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    padding: 0 12px 10px 0;
+    text-align: left;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  thead th:first-child { padding-left: 4px; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.1s;
+  }
+  tbody tr:hover { background: rgba(0,0,0,0.02); }
+  tbody tr.era-divider td {
+    padding-top: 20px;
+  }
+
+  .era-header {
+    background: var(--ink);
+    color: white;
+  }
+  .era-header td {
+    padding: 6px 12px 6px 4px !important;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: none !important;
+  }
+
+  tbody td {
+    padding: 10px 12px 10px 0;
+    vertical-align: top;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-mid);
+  }
+  tbody td:first-child { padding-left: 4px; }
+
+  .state-cell {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    min-width: 90px;
+  }
+  .federal-flag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: white;
+    background: var(--status-federal);
+    padding: 1px 5px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .law-name {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    line-height: 1.4;
+  }
+  .law-cite {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-light);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .year-cell {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .eff-date {
+    display: block;
+    font-size: 10.5px;
+    color: var(--ink-light);
+    margin-top: 2px;
+  }
+
+  /* Platform badges */
+  .plat-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin: 1px 0;
+  }
+  .plat-adult    { color: var(--plat-adult);    background: #f5eeff; border: 1px solid #e0c8f5; }
+  .plat-social   { color: var(--plat-social);   background: #eef4ff; border: 1px solid #c0d5f5; }
+  .plat-all      { color: var(--plat-all);      background: #eef8f0; border: 1px solid #b0d8bc; }
+  .plat-appstore { color: var(--plat-appstore); background: #fff5e8; border: 1px solid #f0c888; }
+  .plat-ai       { color: var(--plat-ai);       background: #fef0f0; border: 1px solid #f0c0c0; }
+  .plat-federal  { color: var(--status-federal); background: var(--status-federal-bg); border: 1px solid #b0d0d0; }
+
+  .age-cell {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .method-cell {
+    min-width: 170px;
+    max-width: 220px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .method-highlight {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .method-note {
+    font-size: 11px;
+    color: var(--ink-light);
+    display: block;
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  .enforcement-cell {
+    font-size: 12px;
+    min-width: 100px;
+  }
+
+  /* Status pill */
+  .status-pill {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .status-active      { color: var(--status-active);     background: var(--status-active-bg);     border: 1px solid #a8d8b0; }
+  .status-enjoined    { color: var(--status-enjoined);   background: var(--status-enjoined-bg);   border: 1px solid #f0b0b0; }
+  .status-partial     { color: var(--status-partial);   background: var(--status-partial-bg);   border: 1px solid #f0cc88; }
+  .status-rulemaking  { color: var(--status-rulemaking); background: var(--status-rulemaking-bg); border: 1px solid #a0bce0; }
+  .status-pending     { color: var(--status-pending);    background: var(--status-pending-bg);    border: 1px solid #c8a8e0; }
+  .status-federal     { color: var(--status-federal);    background: var(--status-federal-bg);    border: 1px solid #88c0c0; }
+
+  .status-note {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 4px;
+    line-height: 1.4;
+    max-width: 200px;
+    font-style: italic;
+  }
+
+  .hidden { display: none !important; }
+
+  /* ── Footnotes ── */
+  .footnotes {
+    padding: 24px 40px 40px;
+    border-top: 2px solid var(--rule-heavy);
+    max-width: 900px;
+  }
+  .footnotes h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 12px;
+  }
+  .footnotes p {
+    font-size: 11.5px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+  .footnotes strong { color: var(--ink-mid); }
+
+  @media (max-width: 768px) {
+    .masthead, .controls, .legend, .table-wrap, .footnotes {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .masthead h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-kicker">Policy Tracker · Age Assurance Legislation</div>
+  <h1>U.S. Online Age Assurance Laws: <br>Updated Tracker (2022–2026)</h1>
+  <p class="masthead-sub">
+    An updated version of New America's 2023 appendix table, extended through March 2026. Covers federal law, state statutes requiring age verification or age assurance for online platforms, and laws in active rulemaking. Excludes offline age verification requirements.
+  </p>
+  <div class="masthead-meta">
+    <span>Original source: New America OTI (2023)</span>
+    <span>Updated through: March 2026</span>
+    <span>Rows: <span id="total-count">—</span> laws / <span id="visible-count">—</span> shown</span>
+  </div>
+</div>
+
+<div class="controls">
+  <div>
+    <label>Platform Type</label>
+    <select id="filter-platform">
+      <option value="all">All platforms</option>
+      <option value="adult">Adult content</option>
+      <option value="social">Social media / addictive feeds</option>
+      <option value="online">All online services (AADC-style)</option>
+      <option value="appstore">App stores</option>
+      <option value="ai">AI / chatbots</option>
+      <option value="federal">Federal</option>
+    </select>
+  </div>
+  <div>
+    <label>Status</label>
+    <select id="filter-status">
+      <option value="all">All statuses</option>
+      <option value="active">In effect</option>
+      <option value="enjoined">Enjoined / Blocked</option>
+      <option value="partial">Partially enjoined</option>
+      <option value="rulemaking">In rulemaking</option>
+      <option value="pending">Not yet in effect</option>
+    </select>
+  </div>
+  <div>
+    <label>Age threshold</label>
+    <select id="filter-age">
+      <option value="all">All thresholds</option>
+      <option value="13">Under 13</option>
+      <option value="16">Under 16</option>
+      <option value="18">Under 18</option>
+    </select>
+  </div>
+  <span class="count-badge">Showing <span id="count-display">—</span> laws</span>
+</div>
+
+<div class="legend">
+  <span class="legend-title">Platform Type</span>
+  <div class="legend-items">
+    <span class="legend-item"><span class="legend-dot" style="background:#e8d5ff;border:1px solid #c8a0f0"></span>Adult content</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#d5e8ff;border:1px solid #a0c0f0"></span>Social media / feeds</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#d5f0dd;border:1px solid #90c89a"></span>All online services</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#ffe8c8;border:1px solid #f0b860"></span>App stores</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#ffe0e0;border:1px solid #f0a0a0"></span>AI / chatbots</span>
+  </div>
+  <span class="legend-title" style="margin-left:16px">Status</span>
+  <div class="legend-items">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--status-active-bg);border:1px solid #a8d8b0"></span>In effect</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--status-enjoined-bg);border:1px solid #f0b0b0"></span>Enjoined</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--status-partial-bg);border:1px solid #f0cc88"></span>Partially enjoined</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--status-rulemaking-bg);border:1px solid #a0bce0"></span>In rulemaking</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--status-pending-bg);border:1px solid #c8a8e0"></span>Not yet in effect</span>
+  </div>
+</div>
+
+<div class="table-wrap">
+<table id="main-table">
+  <colgroup>
+    <col style="width:9%">
+    <col style="width:18%">
+    <col style="width:7%">
+    <col style="width:10%">
+    <col style="width:6%">
+    <col style="width:22%">
+    <col style="width:10%">
+    <col style="width:18%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th>State / Jurisdiction</th>
+      <th>Law Name / Citation</th>
+      <th>Enacted</th>
+      <th>Platform Type</th>
+      <th>Age Threshold</th>
+      <th>Age Assurance Mechanism</th>
+      <th>Enforcement</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="table-body">
+
+    <!-- ══ ERA HEADER: FEDERAL ══ -->
+    <tr class="era-header" data-era="federal">
+      <td colspan="8">Federal Law</td>
+    </tr>
+
+    <tr data-platform="federal" data-status="active" data-age="13">
+      <td class="state-cell">Federal <span class="federal-flag">Fed</span></td>
+      <td><span class="law-name">Children's Online Privacy Protection Act (COPPA)</span><span class="law-cite">15 U.S.C. § 6501 et seq. (1998; FTC Rule updated 2013, 2024)</span></td>
+      <td class="year-cell">1998<span class="eff-date">Rule updated 2024</span></td>
+      <td><span class="plat-badge plat-federal">Online services directed to children</span></td>
+      <td class="age-cell">Under 13</td>
+      <td class="method-cell"><span class="method-highlight">Verifiable parental consent</span> required before collecting personal data from children. Methods include: credit card transaction, toll-free number call, digital certificate, email + follow-up confirmation. <span class="method-note">2024 FTC rule update added stricter VPC standards and expanded scope.</span></td>
+      <td class="enforcement-cell">FTC; civil penalties up to $51,744/violation</td>
+      <td><span class="status-pill status-federal">In Effect</span><span class="status-note">FTC enforcement ongoing. Proposed rule updates under review.</span></td>
+    </tr>
+
+    <!-- ══ ERA HEADER: 2022–2023 (Original New America table) ══ -->
+    <tr class="era-header" data-era="2022-2023">
+      <td colspan="8">2022–2023 — First wave of state age verification laws</td>
+    </tr>
+
+    <tr data-platform="adult" data-status="active" data-age="18">
+      <td class="state-cell">Louisiana</td>
+      <td><span class="law-name">Act 440 / HB 142</span><span class="law-cite">La. Rev. Stat. § 14:91.11 (2022)</span></td>
+      <td class="year-cell">2022<span class="eff-date">Jan 1, 2023</span></td>
+      <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Government-issued ID verification</span> required. Operators must use a "digitized ID card" or comparable method. First state to mandate government ID for adult content. <span class="method-note">Pornhub blocked all Louisiana users rather than comply.</span></td>
+      <td class="enforcement-cell">Private right of action; $1,000–$50,000/violation</td>
+      <td><span class="status-pill status-active">In Effect</span></td>
+    </tr>
+
+    <tr data-platform="adult" data-status="active" data-age="18">
+      <td class="state-cell">Virginia</td>
+      <td><span class="law-name">HB 2485 / SB 1515</span><span class="law-cite">Va. Code § 18.2-374.3:1 (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Jul 1, 2023</span></td>
+      <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> — government ID, financial institution age verification, or digital ID wallet. <span class="method-note">Pornhub blocked Virginia users.</span></td>
+      <td class="enforcement-cell">State AG; civil penalties</td>
+      <td><span class="status-pill status-active">In Effect</span></td>
+    </tr>
+
+    <tr data-platform="adult" data-status="active" data-age="18">
+      <td class="state-cell">Mississippi</td>
+      <td><span class="law-name">HB 1126</span><span class="law-cite">Miss. Code § 97-5-27 (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Jul 1, 2024</span></td>
+      <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> — government ID, credit card verification, or other commercially reasonable methods.</td>
+      <td class="enforcement-cell">State AG; private right of action</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Initially enjoined; 5th Circuit reversed injunction Apr 2025.</span></td>
+    </tr>
+
+    <tr data-platform="adult" data-status="active" data-age="18">
+      <td class="state-cell">North Carolina</td>
+      <td><span class="law-name">HB 8</span><span class="law-cite">N.C. Gen. Stat. § 14-190.5A (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Oct 1, 2023</span></td>
+      <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> — government ID, credit card/bank account age verification.</td>
+      <td class="enforcement-cell">State AG; $1,000–$20,000/violation</td>
+      <td><span class="status-pill status-active">In Effect</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="enjoined" data-age="18">
+      <td class="state-cell">Arkansas</td>
+      <td><span class="law-name">Social Media Safety Act (SB 396)</span><span class="law-cite">Ark. Code § 4-88-1401 et seq. (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Sep 1, 2023</span></td>
+      <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> required for minors to create accounts. Government ID or third-party age verification. <span class="method-note">Parental consent obtained via email with copy of ID.</span></td>
+      <td class="enforcement-cell">State AG; civil penalties</td>
+      <td><span class="status-pill status-enjoined">Permanently Enjoined</span><span class="status-note">NetChoice v. Griffin: permanently enjoined Mar 31, 2025. Court held parental consent requirements unconstitutional under First Amendment.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="enjoined" data-age="18">
+      <td class="state-cell">Montana</td>
+      <td><span class="law-name">SB 419</span><span class="law-cite">Mont. Code § 30-14-501 et seq. (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Oct 1, 2023</span></td>
+      <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Age verification</span> required; method not specified beyond "commercially reasonable."</td>
+      <td class="enforcement-cell">State AG</td>
+      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">Preliminary injunction granted; separate from TikTok ban litigation.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="partial" data-age="18">
+      <td class="state-cell">Texas</td>
+      <td><span class="law-name">SCOPE / HB 18</span><span class="law-cite">Tex. Bus. & Com. Code § 509.001 et seq. (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Sep 1, 2023</span></td>
+      <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> for minor accounts. "Reasonably determine" user's age using commercially available methods including government ID. <span class="method-note">Also prohibits "harmful to minors" content filtering (this section enjoined).</span></td>
+      <td class="enforcement-cell">State AG; $10,000/day; private right of action</td>
+      <td><span class="status-pill status-partial">Partially Enjoined</span><span class="status-note">"Harmful content filtering" section blocked (Aug 2024). Age verification and parental consent provisions in effect. AG investigations ongoing (TikTok, Character.AI).</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="enjoined" data-age="18">
+      <td class="state-cell">Utah</td>
+      <td><span class="law-name">Child and Teen Social Media Protection Act (CSPA / SB 311)</span><span class="law-cite">Utah Code § 13-71-101 et seq. (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Mar 1, 2024</span></td>
+      <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span>. "Commercially reasonable" methods including government ID. Minors need parental consent to create accounts; parental controls mandatory. <span class="method-note">Also required curfew hours (10pm–6:30am) — now blocked.</span></td>
+      <td class="enforcement-cell">State AG; $250,000/violation</td>
+      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">NetChoice v. Brown: preliminary injunction Sep 10, 2024. Appeal to 10th Circuit pending as of Mar 2026.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="active" data-age="18">
+      <td class="state-cell">Connecticut</td>
+      <td><span class="law-name">SB 3 (2023 session)</span><span class="law-cite">Conn. Gen. Stat. § 42-515 et seq. (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Oct 1, 2023</span></td>
+      <td><span class="plat-badge plat-social">Social media (addictive design)</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Actual knowledge" standard</span> — no affirmative age verification requirement. Obligations triggered when operator knows user is a minor. <span class="method-note">Restricts addictive design features for known minors.</span></td>
+      <td class="enforcement-cell">State AG; $50,000/violation</td>
+      <td><span class="status-pill status-active">In Effect</span></td>
+    </tr>
+
+    <!-- ══ ERA HEADER: 2024 ══ -->
+    <tr class="era-header" data-era="2024">
+      <td colspan="8">2024 — AADC expansion, social media feed laws, Florida & Georgia</td>
+    </tr>
+
+    <tr data-platform="online" data-status="enjoined" data-age="18">
+      <td class="state-cell">California</td>
+      <td><span class="law-name">CA Age-Appropriate Design Code Act (CAADCA / AB 2273)</span><span class="law-cite">Cal. Civ. Code § 1798.99.28 et seq. (2022, eff. 2024)</span></td>
+      <td class="year-cell">2022<span class="eff-date">Jul 1, 2024 (blocked)</span></td>
+      <td><span class="plat-badge plat-all">Online services — likely accessed by children</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Age estimation</span> with "reasonable level of certainty appropriate to risks," or apply privacy protections to all users regardless of age. First U.S. law to require age estimation (not just verification). <span class="method-note">Court found this would exacerbate rather than reduce privacy harms by requiring more data collection.</span></td>
+      <td class="enforcement-cell">State AG; $2,500–$7,500/violation per child</td>
+      <td><span class="status-pill status-enjoined">Fully Enjoined</span><span class="status-note">NetChoice v. Bonta: fully enjoined on First Amendment grounds (N.D. Cal., Mar 13, 2025). Privacy/design provisions separately allowed. Appeal pending.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="partial" data-age="16">
+      <td class="state-cell">Florida</td>
+      <td><span class="law-name">Digital Bill of Rights (HB 3)</span><span class="law-cite">Fla. Stat. § 501.1736 (2024, eff. Jan 1, 2025)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Jan 1, 2025</span></td>
+      <td><span class="plat-badge plat-social">Social media (under 16 ban)</span></td>
+      <td class="age-cell">Under 16</td>
+      <td class="method-cell"><span class="method-highlight">Age verification</span> to confirm users are 16+. "Reasonable" methods; includes government ID. Absolute prohibition on social media accounts for under-16s without parental consent. <span class="method-note">Also applies "known child" data-processing obligations under age 18.</span></td>
+      <td class="enforcement-cell">State AG; $50,000/violation</td>
+      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">Under-16 social media ban enjoined (Judge Walker, Jun 2025). "Known child" data provisions active. NetChoice litigation ongoing.</span></td>
+    </tr>
+
+    <tr data-platform="online" data-status="active" data-age="18">
+      <td class="state-cell">Maryland</td>
+      <td><span class="law-name">Maryland Age-Appropriate Design Code (HB 603 / SB 571)</span><span class="law-cite">Md. Code, Com. Law § 14-4301 et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Oct 1, 2024</span></td>
+      <td><span class="plat-badge plat-all">Online services — reasonably likely accessed by children</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">NO age estimation required.</span> "Reasonably likely to be accessed" determined by audience composition factors. Obligations apply to "known" minors only. <span class="method-note">Expressly prohibits processing personal data for purposes of age estimation — deliberate design choice to avoid CAADCA's constitutional vulnerability.</span></td>
+      <td class="enforcement-cell">MD Div. Consumer Protection; $2,500–$7,500/violation per child</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">NetChoice v. Brown (D. Md.) filed Feb 2025; case pending as of Mar 2026. DPIAs required Apr 1, 2026.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="active" data-age="16">
+      <td class="state-cell">Georgia</td>
+      <td><span class="law-name">Protecting Georgia's Children on Social Media Act (SB 351)</span><span class="law-cite">O.C.G.A. § 39-5-1 et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Jul 1, 2025</span></td>
+      <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="age-cell">Under 16</td>
+      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> defined as: digitized ID card, mobile ID credential, or comparable government ID verification. Parental consent required for minors under 16 to create accounts.</td>
+      <td class="enforcement-cell">State AG; $10,000/violation; no private right of action</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Active as of Jul 1, 2025. AG investigations into Roblox and others ongoing. No injunction as of Mar 2026.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="rulemaking" data-age="18">
+      <td class="state-cell">California</td>
+      <td><span class="law-name">Protecting Our Kids from Social Media Addiction Act (SB 976)</span><span class="law-cite">Cal. Health & Safety Code § 27000 et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Jan 1, 2027</span></td>
+      <td><span class="plat-badge plat-social">Social media — addictive feeds</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Age assurance"</span> — specific methods to be defined in AG rulemaking. Operators must "reasonably determine" whether user is minor. AG held public hearing Nov 2025; final rules due Jan 2027. <span class="method-note">Privacy advocates urge feature-gating approach over platform-wide verification. SB 976 does not require platform-wide age-gating.</span></td>
+      <td class="enforcement-cell">State AG; civil enforcement only</td>
+      <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">Partially enjoined Dec 31, 2024 (time-of-day restrictions blocked; age assurance provisions deferred to rulemaking). Rulemaking underway; NPRM expected 2026.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="rulemaking" data-age="18">
+      <td class="state-cell">New York</td>
+      <td><span class="law-name">Stop Addictive Feeds Exploitation (SAFE) for Kids Act</span><span class="law-cite">N.Y. Gen. Bus. Law § 1500 et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">~Mid-2027 (est.)</span></td>
+      <td><span class="plat-badge plat-social">Social media — addictive feeds & nighttime notifications</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Commercially reasonable and technically feasible"</span> age determination. NPRM (Sep 15, 2025) proposed 98% circumvention-detection accuracy threshold and five age brackets. Options include: email/phone cross-check, facial age estimation, government ID, open banking, zero-knowledge proof. <span class="method-note">Comment period closed Dec 1, 2025. Final rules expected late 2026.</span></td>
+      <td class="enforcement-cell">State AG; $5,000/violation; no private right of action</td>
+      <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">NPRM issued Sep 2025. OAG has 1 year from close of comment period to finalize rules. Effective 180 days after final rules.</span></td>
+    </tr>
+
+    <!-- ══ ERA HEADER: 2025 ══ -->
+    <tr class="era-header" data-era="2025">
+      <td colspan="8">2025 — App store laws, new AADCs, device-level signals, AI chatbots</td>
+    </tr>
+
+    <tr data-platform="social" data-status="enjoined" data-age="18">
+      <td class="state-cell">Louisiana</td>
+      <td><span class="law-name">HB 570 (App Store Parental Consent Act)</span><span class="law-cite">La. Rev. Stat. § 51:1752 (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
+      <td><span class="plat-badge plat-appstore">App stores</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">App store-level parental consent</span> before minor downloads or purchases apps. App stores must verify user age and associate minors with parental accounts.</td>
+      <td class="enforcement-cell">State AG; civil penalties</td>
+      <td><span class="status-pill status-enjoined">Permanently Enjoined</span><span class="status-note">NetChoice v. Murrill: permanently enjoined Dec 15, 2025 on First Amendment grounds.</span></td>
+    </tr>
+
+    <tr data-platform="appstore" data-status="pending" data-age="18">
+      <td class="state-cell">Utah</td>
+      <td><span class="law-name">SB 142 (App Store Age Verification)</span><span class="law-cite">Utah Code § 13-71-201 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">May 6, 2026</span></td>
+      <td><span class="plat-badge plat-appstore">App stores</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">App store-level age verification + parental consent</span> before minors download or purchase apps. App stores must create parental control mechanisms and associate minor accounts with parent/guardian accounts.</td>
+      <td class="enforcement-cell">State AG; $2,500/violation</td>
+      <td><span class="status-pill status-pending">Not Yet in Effect</span><span class="status-note">Eff. May 6, 2026. No injunction as of Mar 2026. NetChoice lawsuit possible given similar Louisiana law was enjoined.</span></td>
+    </tr>
+
+    <tr data-platform="appstore" data-status="active" data-age="18">
+      <td class="state-cell">Texas</td>
+      <td><span class="law-name">App Store Accountability Act (SB 2420)</span><span class="law-cite">Tex. Bus. & Com. Code § 509A.001 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
+      <td><span class="plat-badge plat-appstore">App stores</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">App store-level parental consent</span> before minors download, purchase, or make in-app purchases. App stores must verify user age and associate minor accounts with parental accounts. <span class="method-note">Broader than Louisiana/Utah — applies to in-app purchases too.</span></td>
+      <td class="enforcement-cell">State AG; civil penalties</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jan 1, 2026. CCIA filed lawsuit Oct 2025 (Judge Pitman). Case pending as of Mar 2026.</span></td>
+    </tr>
+
+    <tr data-platform="online" data-status="active" data-age="18">
+      <td class="state-cell">Nebraska</td>
+      <td><span class="law-name">Age-Appropriate Online Design Code Act (LB 1096)</span><span class="law-cite">Neb. Rev. Stat. § 87-4001 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
+      <td><span class="plat-badge plat-all">Online services — all types</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">No explicit age verification requirement.</span> "Actual knowledge" standard; obligations triggered when operator knows or should know user is a minor. Prohibits dark patterns outright — broadest dark-pattern ban of any state. <span class="method-note">Narrower scope than Vermont: applies only to businesses generating majority revenue from online services and with &lt;50,000 users.</span></td>
+      <td class="enforcement-cell">State AG; $50,000/violation (penalties from Jul 2026)</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jan 1, 2026; penalty enforcement from Jul 1, 2026. No lawsuits filed as of Mar 2026.</span></td>
+    </tr>
+
+    <tr data-platform="online" data-status="rulemaking" data-age="18">
+      <td class="state-cell">Vermont</td>
+      <td><span class="law-name">Vermont Age-Appropriate Design Code Act (S.69 / Act 63)</span><span class="law-cite">9 V.S.A. § 2449a et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jan 1, 2027</span></td>
+      <td><span class="plat-badge plat-all">Online services — reasonably likely accessed by minors (≥2% minor audience)</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">AG rulemaking required</span> — statute mandates that rules <em>prioritize user privacy and accessibility over accuracy</em> of age assurance methods. Unique statutory directive: privacy comes first. Methods must be "commercially reasonable and technically feasible." <span class="method-note">Informal rulemaking phase underway; formal NPRM Spring 2026; final rules by Jan 2027.</span></td>
+      <td class="enforcement-cell">State AG; $10,000/violation; also private right of action ($500/initial violation)</td>
+      <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">Informal stakeholder comment phase open as of Mar 2026. Formal NPRM expected Spring 2026. Most privacy-protective statutory mandate of any U.S. age assurance law.</span></td>
+    </tr>
+
+    <tr data-platform="online" data-status="pending" data-age="18">
+      <td class="state-cell">California</td>
+      <td><span class="law-name">Digital Age Assurance Act (AB 1043)</span><span class="law-cite">Cal. Bus. & Prof. Code § 22949.90 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jan 1, 2027</span></td>
+      <td><span class="plat-badge plat-appstore">OS-level / all mobile apps</span></td>
+      <td class="age-cell">Age brackets (all)</td>
+      <td class="method-cell"><span class="method-highlight">OS-level age bracket signal</span>. Operating system providers must offer interface at account setup prompting users to indicate birth date or age. App developers request age signal from OS on download and launch. <span class="method-note">Places collection burden on OSPs (Apple, Google), not app stores or developers. Unlike app store laws, applies to all apps regardless of content. Age brackets transmitted as signal, not raw age data.</span></td>
+      <td class="enforcement-cell">State AG; civil enforcement</td>
+      <td><span class="status-pill status-pending">Not Yet in Effect</span><span class="status-note">Eff. Jan 1, 2027. Novel OS-level architecture, different from all other state laws. Implementation guidance from Apple/Google pending.</span></td>
+    </tr>
+
+    <tr data-platform="ai" data-status="active" data-age="18">
+      <td class="state-cell">California</td>
+      <td><span class="law-name">Companion Chat Platform Transparency Act (SB 243)</span><span class="law-cite">Cal. Health & Safety Code § 27100 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Sep 30, 2025</span></td>
+      <td><span class="plat-badge plat-ai">AI companion chatbots</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Knows user is a minor"</span> standard; no affirmative verification required. When minor status is known: mandatory AI disclosure, 3-hour reminder notifications, prohibition on generating/encouraging sexually explicit content for minors. <span class="method-note">First U.S. law specifically targeting AI companion platforms' interactions with minors.</span></td>
+      <td class="enforcement-cell">State AG; civil penalties</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Sep 30, 2025. Enforcement began 2026. Applies to Character.AI, Replika, and similar services.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="enjoined" data-age="18">
+      <td class="state-cell">Virginia</td>
+      <td><span class="law-name">SB 854 (Social Media Age Verification)</span><span class="law-cite">Va. Code § 59.1-600 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
+      <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> for minors to create social media accounts. Government ID or third-party verification.</td>
+      <td class="enforcement-cell">State AG; civil penalties</td>
+      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">NetChoice v. Miyares filed Nov 2025; preliminary injunction granted shortly thereafter. Case pending as of Mar 2026.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="active" data-age="18">
+      <td class="state-cell">Connecticut</td>
+      <td><span class="law-name">CTDPA Amendments (Sub. SB 1295 / PA 25-113)</span><span class="law-cite">Conn. Gen. Stat. § 42-520 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jul 1, 2025</span></td>
+      <td><span class="plat-badge plat-all">Online services — all categories</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">No explicit age verification mechanism.</span> Bans sale of minors' personal data; prohibits targeted advertising to under-18s; requires DPIAs for profiling minors. <span class="method-note">Expanded "heightened risk to minors" definition to include harassment, violence, and exploitation.</span></td>
+      <td class="enforcement-cell">State AG; $5,000–$25,000/violation</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jul 1, 2025. Complements 2023 CT law. No First Amendment challenges filed as of Mar 2026.</span></td>
+    </tr>
+
+    <tr data-platform="social" data-status="rulemaking" data-age="18">
+      <td class="state-cell">New York</td>
+      <td><span class="law-name">New York Child Data Protection Act (CDPA)</span><span class="law-cite">N.Y. Gen. Bus. Law § 899-ee et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Jun 20, 2025</span></td>
+      <td><span class="plat-badge plat-all">Online services — all operators</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Actual knowledge" standard</span> — prohibits collection, use, sharing, or sale of personal data of users under 18 without informed consent or strict necessity. No affirmative age verification required. <span class="method-note">Companion to NY SAFE for Kids Act. AG ANPRM issued Aug 2024 also covered CDPA implementation.</span></td>
+      <td class="enforcement-cell">State AG; $5,000/violation</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jun 20, 2025. Enforcement underway. Rulemaking continues.</span></td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<div class="footnotes">
+  <h3>Notes &amp; Sources</h3>
+  <p><strong>Adapted from:</strong> New America OTI, "Age Verification: The Complicated Effort to Protect Youth Online" (2023). Extended with post-2023 developments through March 2026.</p>
+  <p><strong>Litigation status:</strong> Reflects case outcomes and posture as of March 18, 2026. The legal landscape is extremely volatile; multiple cases have reversed within months. Always verify current status against court records.</p>
+  <p><strong>Age threshold:</strong> Reflects the threshold for the age assurance/verification trigger. Some laws have additional provisions at different age cutoffs (e.g., Florida restricts accounts for under-16 while applying data obligations for under-18).</p>
+  <p><strong>Mechanism types:</strong> "Government ID" = requires digitized or scanned government-issued photo ID; "Commercially reasonable" = flexible standard allowing multiple methods; "Age estimation" = uses behavioral, biometric, or other signals to infer age without requiring ID; "Audience-based" = obligations triggered by audience composition assessment rather than individual user verification.</p>
+  <p><strong>Excluded:</strong> State laws restricted to offline venues; COPPA Rule proposed rulemaking details; laws requiring age assurance only for alcohol/tobacco/gambling purchases. UK Online Safety Act and Ofcom guidance covered separately.</p>
+</div>
+
+<script>
+  const rows = Array.from(document.querySelectorAll('#table-body tr[data-platform]'));
+  const eraHeaders = Array.from(document.querySelectorAll('#table-body tr.era-header'));
+  
+  const totalCount = rows.length;
+  document.getElementById('total-count').textContent = totalCount;
+
+  function updateTable() {
+    const platform = document.getElementById('filter-platform').value;
+    const status   = document.getElementById('filter-status').value;
+    const age      = document.getElementById('filter-age').value;
+
+    let visible = 0;
+    rows.forEach(row => {
+      const rp = row.dataset.platform;
+      const rs = row.dataset.status;
+      const ra = row.dataset.age;
+
+      const platformMatch = platform === 'all' || rp === platform;
+      const statusMatch   = status === 'all'   || rs === status;
+      const ageMatch      = age === 'all'      || ra === age;
+
+      if (platformMatch && statusMatch && ageMatch) {
+        row.classList.remove('hidden');
+        visible++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+
+    // Hide era headers if all their rows are hidden
+    const eras = ['federal', '2022-2023', '2024', '2025'];
+    eras.forEach(era => {
+      const header = document.querySelector(`tr.era-header[data-era="${era}"]`);
+      if (!header) return;
+      const eraRows = Array.from(document.querySelectorAll(`#table-body tr[data-platform]`)).filter(r => {
+        // Check if this row belongs to this era by position
+        // We'll use a different approach - just show all era headers when any row is visible
+        return true;
+      });
+      // Simple approach: hide era header only if ALL data rows are hidden
+      // We'll check if any subsequent rows before the next era header are visible
+      let nextEl = header.nextElementSibling;
+      let anyVisible = false;
+      while (nextEl && !nextEl.classList.contains('era-header')) {
+        if (!nextEl.classList.contains('hidden') && nextEl.dataset.platform) {
+          anyVisible = true;
+          break;
+        }
+        nextEl = nextEl.nextElementSibling;
+      }
+      if (anyVisible) {
+        header.classList.remove('hidden');
+      } else {
+        header.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('visible-count').textContent = visible;
+    document.getElementById('count-display').textContent = visible;
+  }
+
+  document.getElementById('filter-platform').addEventListener('change', updateTable);
+  document.getElementById('filter-status').addEventListener('change', updateTable);
+  document.getElementById('filter-age').addEventListener('change', updateTable);
+
+  updateTable();
+</script>
+
+</body>
+</html>
