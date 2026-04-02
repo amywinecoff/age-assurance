@@ -215,9 +215,10 @@
   }
 
   .era-header {
-    background: var(--ink);
-    color: white;
+    background: #e8e4dc;
+    color: var(--ink);
   }
+  .era-header:hover { background: #e8e4dc; }
   .era-header td {
     padding: 6px 12px 6px 4px !important;
     font-family: 'IBM Plex Mono', monospace;
@@ -385,6 +386,67 @@
   }
   .footnotes strong { color: var(--ink-mid); }
 
+
+
+  /* ── Sources ── */
+  .sources-cell {
+    font-size: 11px;
+    min-width: 100px;
+    max-width: 150px;
+    line-height: 1.6;
+  }
+  .sources-cell a {
+    display: block;
+    color: var(--status-rulemaking);
+    text-decoration: none;
+    word-break: break-word;
+    margin-bottom: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+  }
+  .sources-cell a:hover { text-decoration: underline; }
+  .sources-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    display: block;
+    margin-bottom: 2px;
+    margin-top: 4px;
+  }
+  .sources-label:first-child { margin-top: 0; }
+
+  /* ── Implementation Locus ── */
+  .impl-cell {
+    min-width: 120px;
+    max-width: 170px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .impl-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin: 1px 0;
+  }
+  .impl-service  { color: #1a4a5c; background: #e8f4fa; border: 1px solid #9ecce0; }
+  .impl-appstore { color: #4a2a00; background: #fdf0d8; border: 1px solid #e0a840; }
+  .impl-os       { color: #1a1a5c; background: #eeeeff; border: 1px solid #9090e0; }
+  .impl-note {
+    font-size: 11px;
+    color: var(--ink-light);
+    display: block;
+    margin-top: 2px;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
   @media (max-width: 768px) {
     .masthead, .controls, .legend, .table-wrap, .footnotes {
       padding-left: 20px;
@@ -462,19 +524,27 @@
     <span class="legend-item"><span class="legend-dot" style="background:var(--status-rulemaking-bg);border:1px solid #a0bce0"></span>In rulemaking</span>
     <span class="legend-item"><span class="legend-dot" style="background:var(--status-pending-bg);border:1px solid #c8a8e0"></span>Not yet in effect</span>
   </div>
+  <span class="legend-title" style="margin-left:16px">Implementation Locus</span>
+  <div class="legend-items">
+    <span class="legend-item"><span class="legend-dot" style="background:#e8f4fa;border:1px solid #9ecce0"></span>Service provider</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#fdf0d8;border:1px solid #e0a840"></span>App store</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#eeeeff;border:1px solid #9090e0"></span>OS / device provider</span>
+  </div>
 </div>
 
 <div class="table-wrap">
 <table id="main-table">
   <colgroup>
-    <col style="width:9%">
-    <col style="width:18%">
     <col style="width:7%">
+    <col style="width:14%">
+    <col style="width:5%">
+    <col style="width:8%">
     <col style="width:10%">
-    <col style="width:6%">
-    <col style="width:22%">
-    <col style="width:10%">
+    <col style="width:5%">
     <col style="width:18%">
+    <col style="width:8%">
+    <col style="width:14%">
+    <col style="width:11%">
   </colgroup>
   <thead>
     <tr>
@@ -482,17 +552,19 @@
       <th>Law Name / Citation</th>
       <th>Enacted</th>
       <th>Platform Type</th>
+      <th>Implementation Locus</th>
       <th>Age Threshold</th>
       <th>Age Assurance Mechanism</th>
       <th>Enforcement</th>
       <th>Status</th>
+      <th>Sources</th>
     </tr>
   </thead>
   <tbody id="table-body">
 
     <!-- ══ ERA HEADER: FEDERAL ══ -->
     <tr class="era-header" data-era="federal">
-      <td colspan="8">Federal Law</td>
+      <td colspan="10">Federal Law</td>
     </tr>
 
     <tr data-platform="federal" data-status="active" data-age="13">
@@ -500,15 +572,24 @@
       <td><span class="law-name">Children's Online Privacy Protection Act (COPPA)</span><span class="law-cite">15 U.S.C. § 6501 et seq. (1998; FTC Rule updated 2013, 2024)</span></td>
       <td class="year-cell">1998<span class="eff-date">Rule updated 2024</span></td>
       <td><span class="plat-badge plat-federal">Online services directed to children</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Online service directed to children; may delegate to third-party consent management agent</span></td>
       <td class="age-cell">Under 13</td>
-      <td class="method-cell"><span class="method-highlight">Verifiable parental consent</span> required before collecting personal data from children. Methods include: credit card transaction, toll-free number call, digital certificate, email + follow-up confirmation. <span class="method-note">2024 FTC rule update added stricter VPC standards and expanded scope.</span></td>
-      <td class="enforcement-cell">FTC; civil penalties up to $51,744/violation</td>
+      <td class="method-cell"><span class="method-highlight">Self-attestation (DOB entry)</span> for age determination — no verification required. General audience sites may rely on user-entered age even if inaccurate; obligations attach on "actual knowledge" a user is under 13. Mixed audience sites must use a neutral age screen but post-2025 rule may no longer rely on self-declaration alone. Once a child is identified: <span class="method-highlight">verifiable parental consent (VPC)</span> is required before data collection, using methods such as credit card transaction, toll-free call, digital certificate, or email + follow-up. <span class="method-note">VPC methods are a downstream consent mechanism — not the age determination step. 2025 rule (eff. Jun 23, 2025) tightened VPC standards and added separate consent requirement for third-party data sharing. FTC Policy Statement encourages but does not require more robust age verification.</span></td>
+      <td class="enforcement-cell">FTC; civil penalties up to $53,088/violation (inflation-adjusted annually)</td>
       <td><span class="status-pill status-federal">In Effect</span><span class="status-note">FTC enforcement ongoing. Proposed rule updates under review.</span></td>
-    </tr>
+    
+      <td class="sources-cell">
+  <span class="sources-label">Primary</span>
+  <a href="https://www.ftc.gov/business-guidance/resources/complying-coppa-frequently-asked-questions" target="_blank">FTC COPPA FAQ (ftc.gov)</a>
+  <span class="sources-label">Rule &amp; penalty</span>
+  <a href="https://www.gibsondunn.com/ftc-updates-to-coppa-rule-impose-new-compliance-obligations-for-online-services-that-collect-data-from-children/" target="_blank">Gibson Dunn: 2025 Rule Analysis</a>
+  <span class="sources-label">Age verification</span>
+  <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/ftc-issues-coppa-policy-statement-encouraging-adoption-of-age-verification-technologies" target="_blank">Hunton: FTC Policy Statement on AV</a>
+</td></tr>
 
     <!-- ══ ERA HEADER: 2022–2023 (Original New America table) ══ -->
     <tr class="era-header" data-era="2022-2023">
-      <td colspan="8">2022–2023 — First wave of state age verification laws</td>
+      <td colspan="10">2022–2023 — First wave of state age verification laws</td>
     </tr>
 
     <tr data-platform="adult" data-status="active" data-age="18">
@@ -516,285 +597,544 @@
       <td><span class="law-name">Act 440 / HB 142</span><span class="law-cite">La. Rev. Stat. § 14:91.11 (2022)</span></td>
       <td class="year-cell">2022<span class="eff-date">Jan 1, 2023</span></td>
       <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Adult content website; may delegate to third-party age verification service (e.g., AgeID, Yoti)</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">Government-issued ID verification</span> required. Operators must use a "digitized ID card" or comparable method. First state to mandate government ID for adult content. <span class="method-note">Pornhub blocked all Louisiana users rather than comply.</span></td>
-      <td class="enforcement-cell">Private right of action; $1,000–$50,000/violation</td>
+      <td class="method-cell"><span class="method-highlight">Reasonable age verification</span> required; statute defines two compliant pathways: (1) <span class="method-highlight">Digitized ID card</span> — as defined under La. R.S. 51:3211 (state-issued digital ID credential); or (2) <span class="method-highlight">Commercial age verification system</span> — verifying age via (i) government-issued identification, or (ii) any commercially reasonable method relying on public or private transactional data to confirm the user is 18+. <span class="method-note">First state to mandate government ID for adult content. The transactional data pathway (e.g., credit header data, open banking signals) gives operators flexibility beyond document-based ID. Pornhub blocked all Louisiana users rather than comply.</span></td>
+      <td class="enforcement-cell">Private right of action only; actual damages + court costs + reasonable attorney fees (no statutory floor or cap). Separate liability applies to any third-party AV vendor that retains identifying information post-access.</td>
       <td><span class="status-pill status-active">In Effect</span></td>
-    </tr>
+    
+      <td class="sources-cell">
+  <span class="sources-label">Enrolled bill</span>
+  <a href="https://legis.la.gov/legis/ViewDocument.aspx?d=1289498" target="_blank">La. HB 142 Enrolled (legis.la.gov)</a>
+</td></tr>
 
     <tr data-platform="adult" data-status="active" data-age="18">
       <td class="state-cell">Virginia</td>
-      <td><span class="law-name">HB 2485 / SB 1515</span><span class="law-cite">Va. Code § 18.2-374.3:1 (2023)</span></td>
+      <td><span class="law-name">SB 1515</span><span class="law-cite">Va. Code § 8.01-40.5 (2023 Acts ch. 811)</span></td>
       <td class="year-cell">2023<span class="eff-date">Jul 1, 2023</span></td>
       <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Adult content website; may delegate to third-party age verification service</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> — government ID, financial institution age verification, or digital ID wallet. <span class="method-note">Pornhub blocked Virginia users.</span></td>
-      <td class="enforcement-cell">State AG; civil penalties</td>
+      <td class="method-cell"><span class="method-highlight">Age and identity verification</span> required via: (i) a commercially available database regularly used by businesses or governmental entities for age and identity verification, or (ii) any other commercially reasonable method of age and identity verification. <span class="method-note">No specific methods enumerated — broader and more flexible than Louisiana's statute. ISPs, search engines, and cloud providers explicitly exempt. Pornhub blocked Virginia users.</span></td>
+      <td class="enforcement-cell">Private right of action only; civil damages resulting from a minor's access + reasonable attorney fees and costs (no statutory floor or cap; no AG enforcement role)</td>
       <td><span class="status-pill status-active">In Effect</span></td>
-    </tr>
+    
+      <td class="sources-cell">
+  <span class="sources-label">Codified statute</span>
+  <a href="https://law.lis.virginia.gov/vacodefull/title8.01/chapter3/article3/" target="_blank">Va. Code § 8.01-40.5 (law.lis.virginia.gov)</a>
+  <span class="sources-label">Bill tracking</span>
+  <a href="https://legacylis.virginia.gov/cgi-bin/legp604.exe?231+sum+SB1515=" target="_blank">SB1515 history (lis.virginia.gov)</a>
+</td></tr>
 
     <tr data-platform="adult" data-status="active" data-age="18">
       <td class="state-cell">Mississippi</td>
-      <td><span class="law-name">HB 1126</span><span class="law-cite">Miss. Code § 97-5-27 (2023)</span></td>
-      <td class="year-cell">2023<span class="eff-date">Jul 1, 2024</span></td>
+      <td><span class="law-name">SB 2346</span><span class="law-cite">Miss. 2023 SB 2346 (code citation unverified; § 97-5-27 is a pre-existing criminal obscenity statute, not this act)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Jul 1, 2023</span></td>
       <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Adult content website; may delegate to third-party age verification service</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> — government ID, credit card verification, or other commercially reasonable methods.</td>
-      <td class="enforcement-cell">State AG; private right of action</td>
-      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Initially enjoined; 5th Circuit reversed injunction Apr 2025.</span></td>
-    </tr>
+      <td class="method-cell"><span class="method-highlight">Reasonable age verification</span> required; two compliant pathways: (1) <span class="method-highlight">Digitized ID card</span>, or (2) <span class="method-highlight">Commercial age verification system</span> — via government-issued ID or any commercially reasonable method relying on public or private transactional data to confirm user is 18+. <span class="method-note">Functionally identical to Louisiana Act 440. No credit card method specified.</span></td>
+      <td class="enforcement-cell">Private right of action only; actual damages resulting from a minor's access + court costs + reasonable attorney fees (no statutory floor or cap; no AG enforcement role). Separate liability for third-party AV vendors that retain identifying information.</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jul 1, 2023. No court challenge to SB 2346 identified. Note: the enjoined/5th Circuit litigation described in the original tracker refers to HB 1126 (2024), a separate social media law.</span></td>
+    
+      <td class="sources-cell">
+  <span class="sources-label">Bill (LegiScan)</span>
+  <a href="https://legiscan.com/MS/bill/SB2346/2023" target="_blank">MS SB2346 2023 (legiscan.com)</a>
+  <span class="sources-label">Compliance guide</span>
+  <a href="https://veratad.com/regulatory-compliance/mississippi-sb-2346-compliance" target="_blank">Veratad SB 2346 guide</a>
+  <span class="sources-label">Bill text</span>
+  <a href="https://billstatus.ls.state.ms.us/documents/2023/html/SB/2300-2399/SB2346SG.htm" target="_blank">SB2346 as sent to Governor</a>
+</td></tr>
 
     <tr data-platform="adult" data-status="active" data-age="18">
       <td class="state-cell">North Carolina</td>
-      <td><span class="law-name">HB 8</span><span class="law-cite">N.C. Gen. Stat. § 14-190.5A (2023)</span></td>
-      <td class="year-cell">2023<span class="eff-date">Oct 1, 2023</span></td>
+      <td><span class="law-name">HB 8 / PAVE Act</span><span class="law-cite">N.C. Gen. Stat. §§ 66-500–66-501, Art. 51 Ch. 66 (S.L. 2023-132, § 3.20)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Jan 1, 2024</span></td>
       <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Adult content website; may delegate to third-party age verification service</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> — government ID, credit card/bank account age verification.</td>
-      <td class="enforcement-cell">State AG; $1,000–$20,000/violation</td>
-      <td><span class="status-pill status-active">In Effect</span></td>
+      <td class="method-cell"><span class="method-highlight">Age and identity verification</span> required via: (i) a commercially available database regularly used by businesses or governmental entities for age and identity verification, or (ii) any other commercially reasonable method of age and identity verification. <span class="method-note">No specific methods enumerated — same two-pathway structure as Virginia § 8.01-40.5. No credit card or bank account method specified. Third-party AV vendors prohibited from retaining identifying information post-access.</span></td>
+      <td class="enforcement-cell">Private right of action only; brought by parent/guardian of a minor who accessed the material, or by any person whose identifying information was retained in violation. Court may award compensatory and punitive damages + attorney fees + costs. No AG enforcement role; no statutory floor or cap.</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jan 1, 2024 (S.L. 2023-132 enacted Oct 2, 2023 but § 3.20 has its own effective date). No court challenge identified as of Mar 2026.</span></td>
+
+      <td class="sources-cell">
+  <span class="sources-label">Codified statute</span>
+  <a href="https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_66/Article_51.html" target="_blank">G.S. §§ 66-500–501 (ncleg.gov)</a>
+  <span class="sources-label">Session law</span>
+  <a href="https://www.ncleg.gov/EnactedLegislation/SessionLaws/HTML/2023-2024/SL2023-132.html" target="_blank">S.L. 2023-132 (ncleg.gov)</a>
+  <span class="sources-label">Legislative analysis</span>
+  <a href="https://dashboard.ncleg.gov/api/Services/BillSummary/2023/H8-SMSA-61(sl)-v-4" target="_blank">NCGA Staff Analysis § 3.20</a>
+</td></tr>
+
+    <tr data-platform="adult" data-status="active" data-age="18">
+      <td class="state-cell">Montana</td>
+      <td><span class="law-name">SB 544 (Ch. 700, L. 2023)</span><span class="law-cite">Mont. Code § 30-14-159 (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Jan 1, 2024</span></td>
+      <td><span class="plat-badge plat-adult">Adult content (≥33.3%)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Adult content website; may delegate to third-party age verification service</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Reasonable age verification</span> required; two compliant pathways: (1) <span class="method-highlight">Digitized ID card</span>, or (2) <span class="method-highlight">Commercial age verification system</span> — via government-issued ID or any commercially reasonable method relying on public or private transactional data to confirm user is 18+. <span class="method-note">Identical structure to Louisiana Act 440. No third-party retention of identifying information permitted after access granted. DOJ must publish annual report of enforcement activity.</span></td>
+      <td class="enforcement-cell">Private right of action only; actual damages resulting from a minor's access + court costs + attorney fees (no statutory floor or cap; no AG enforcement role). Separate liability for third-party AV vendors that retain identifying information.</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jan 1, 2024. Signed May 19, 2023 by Gov. Gianforte. Pornhub blocked Montana users rather than comply. No court challenge identified as of Mar 2026.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Bill text</span>
+  <a href="https://archive.legmt.gov/bills/2023/billhtml/SB0544.htm" target="_blank">SB 544 text (archive.legmt.gov)</a>
+  <span class="sources-label">Codified statute</span>
+  <a href="https://archive.legmt.gov/bills/mca/title_0300/chapter_0140/part_0010/section_0590/0300-0140-0010-0590.html" target="_blank">Mont. Code § 30-14-159</a>
+</td>
     </tr>
 
     <tr data-platform="social" data-status="enjoined" data-age="18">
       <td class="state-cell">Arkansas</td>
-      <td><span class="law-name">Social Media Safety Act (SB 396)</span><span class="law-cite">Ark. Code § 4-88-1401 et seq. (2023)</span></td>
+      <td><span class="law-name">Social Media Safety Act (SB 396 / Act 689)</span><span class="law-cite">Ark. Code § 4-88-1401 et seq. (2023)</span></td>
       <td class="year-cell">2023<span class="eff-date">Sep 1, 2023</span></td>
       <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Social media platform; third-party vendor use is mandatory, not optional. Applies only to platforms with ≥$100M annual revenue.</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> required for minors to create accounts. Government ID or third-party age verification. <span class="method-note">Parental consent obtained via email with copy of ID.</span></td>
-      <td class="enforcement-cell">State AG; civil penalties</td>
-      <td><span class="status-pill status-enjoined">Permanently Enjoined</span><span class="status-note">NetChoice v. Griffin: permanently enjoined Mar 31, 2025. Court held parental consent requirements unconstitutional under First Amendment.</span></td>
-    </tr>
+      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> required for minors to create accounts. A <span class="method-highlight">third-party vendor</span> must perform reasonable age verification (use of a third party is mandatory). Methods: (A) digitized ID card, (B) government-issued ID, or (C) any commercially reasonable age verification method. Parental consent must be confirmed at account creation. <span class="method-note">No "email with copy of ID" method specified in the statute. Covers only social media companies with ≥$100M annual gross revenue. ISPs and search engines explicitly exempt.</span></td>
+      <td class="enforcement-cell">AG enforcement (§ 4-88-104) + prosecutor enforcement (§ 4-88-103); also private right of action: $2,500/violation + court costs + attorney fees, or actual damages resulting from a minor accessing the platform without parental consent.</td>
+      <td><span class="status-pill status-enjoined">Permanently Enjoined</span><span class="status-note">Preliminarily enjoined before Sep 1, 2023 effective date; never took effect. Permanently enjoined Mar 31, 2025 (NetChoice v. Griffin, W.D. Ark.). Court held Act 689 unconstitutional on two grounds: (1) First Amendment — content-based restriction not narrowly tailored, burdening adult speech as well as minor access; (2) unconstitutional vagueness. Arkansas appealed to 8th Circuit (opening brief Dec 2025; case pending Mar 2026). Arkansas also passed amending legislation (Act 900 / SB 611, 2025), also challenged and enjoined by same court.</span></td>
 
-    <tr data-platform="social" data-status="enjoined" data-age="18">
-      <td class="state-cell">Montana</td>
-      <td><span class="law-name">SB 419</span><span class="law-cite">Mont. Code § 30-14-501 et seq. (2023)</span></td>
-      <td class="year-cell">2023<span class="eff-date">Oct 1, 2023</span></td>
-      <td><span class="plat-badge plat-social">Social media</span></td>
-      <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">Age verification</span> required; method not specified beyond "commercially reasonable."</td>
-      <td class="enforcement-cell">State AG</td>
-      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">Preliminary injunction granted; separate from TikTok ban litigation.</span></td>
-    </tr>
+      <td class="sources-cell">
+  <span class="sources-label">Bill text (engrossed)</span>
+  <a href="https://www.arkleg.state.ar.us/Home/FTPDocument?path=/Bills/2023R/Public/SB396.pdf" target="_blank">SB396 engrossed (arkleg.state.ar.us)</a>
+  <span class="sources-label">Bill tracking</span>
+  <a href="https://legiscan.com/AR/bill/SB396/2023" target="_blank">AR SB396 2023 (legiscan.com)</a>
+  <span class="sources-label">Litigation</span>
+  <a href="https://netchoice.org/netchoice-v-griffin/" target="_blank">NetChoice v. Griffin (netchoice.org)</a>
+  <span class="sources-label">Permanent injunction</span>
+  <a href="https://arkansasadvocate.com/wp-content/uploads/2025/04/NetChoice-v-Griffin-Ruling-040125.pdf" target="_blank">W.D. Ark. Mar 31, 2025 ruling</a>
+</td></tr>
 
     <tr data-platform="social" data-status="partial" data-age="18">
       <td class="state-cell">Texas</td>
       <td><span class="law-name">SCOPE / HB 18</span><span class="law-cite">Tex. Bus. & Com. Code § 509.001 et seq. (2023)</span></td>
-      <td class="year-cell">2023<span class="eff-date">Sep 1, 2023</span></td>
-      <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="year-cell">2023<span class="eff-date">Sep 1, 2024</span></td>
+      <td><span class="plat-badge plat-social">Social media / digital services</span><span class="method-note">Applies to any digital service with social interaction, public/semi-public profiles, and user-generated content — broader than traditional social media. Numerous exemptions including email, direct messaging, news/sports/commerce, education, and small businesses.</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Digital service provider; commercially available verification methods used for parent identity verification, not primary age determination</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> for minor accounts. "Reasonably determine" user's age using commercially available methods including government ID. <span class="method-note">Also prohibits "harmful to minors" content filtering (this section enjoined).</span></td>
-      <td class="enforcement-cell">State AG; $10,000/day; private right of action</td>
-      <td><span class="status-pill status-partial">Partially Enjoined</span><span class="status-note">"Harmful content filtering" section blocked (Aug 2024). Age verification and parental consent provisions in effect. AG investigations ongoing (TikTok, Character.AI).</span></td>
+      <td class="method-cell"><span class="method-highlight">Age self-registration</span> (§ 509.051) — users must register their age at account creation; no independent verification required at that stage. A commercially reasonable review process is required only if a user attempts to alter their registered age. Once a minor is a "known minor," providers must obtain parental consent and restrict data collection, targeted ads, purchases, and geolocation. <span class="method-highlight">Separate adult content provision</span> (§ 509.057): platforms where >33% of content is harmful material must use commercially reasonable age verification to confirm users are 18+. <span class="method-note">Parental identity verified by commercially reasonable method (§ 509.101). Monitoring/filtering/blocking strategy for harmful content (§ 509.053) — this section is enjoined.</span></td>
+      <td class="enforcement-cell">AG only; violation = deceptive trade practice under Ch. 17; AG may seek injunctive relief, civil penalties up to $10,000/violation, and attorney fees. <span class="method-note">Statute explicitly bars a private right of action (§ 509.152). Limited exception: parents/guardians may seek declaratory judgment only.</span></td>
+      <td><span class="status-pill status-partial">Partially Enjoined</span><span class="status-note">Eff. Sep 1, 2024 (digital services provisions; school devices article eff. Sep 1, 2023). Lawsuit filed Jul 30, 2024 (CCIA &amp; NetChoice v. Paxton, W.D. Tex.). Judge Pitman granted preliminary injunction Aug 30, 2024 blocking § 509.053 monitoring/filtering/blocking provision — overbroad, vague, fails strict scrutiny. Age self-registration and parental consent provisions remain in effect. Texas appealed to 5th Circuit (briefs completed Jul 2025; decision pending Mar 2026). AG investigations ongoing (Character.AI, Reddit, Instagram, Discord).</span></td>
+
+      <td class="sources-cell">
+  <span class="sources-label">Enrolled bill</span>
+  <a href="https://capitol.texas.gov/tlodocs/88R/billtext/html/HB00018F.htm" target="_blank">HB 18 enrolled (capitol.texas.gov)</a>
+  <span class="sources-label">AG overview</span>
+  <a href="https://www.texasattorneygeneral.gov/consumer-protection/file-consumer-complaint/consumer-privacy-rights/securing-children-online-through-parental-empowerment" target="_blank">Texas AG SCOPE summary</a>
+  <span class="sources-label">Litigation</span>
+  <a href="https://netchoice.org/ccia-netchoice-v-paxton-texas-2024/" target="_blank">CCIA &amp; NetChoice v. Paxton (netchoice.org)</a>
+</td></tr>
+
+    <tr data-platform="social" data-status="enjoined" data-age="18">
+      <td class="state-cell">Utah</td>
+      <td><span class="law-name">Utah Social Media Regulation Act (SB 152 / HB 311)</span><span class="law-cite">Utah Code §§ 13-63-101 et seq. (2023) — repealed May 2024</span></td>
+      <td class="year-cell">2023<span class="eff-date">Never took effect; repealed</span></td>
+      <td><span class="plat-badge plat-social">Social media (≥5M users worldwide)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Social media platform; applies to companies with ≥5M account holders worldwide</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> (SB 152): government-issued ID required per implementing rules; method details delegated to Division of Consumer Protection rulemaking. Parental consent required for minor accounts. Curfew hours (10:30pm–6:30am) required parental consent to access. <span class="method-note">HB 311 separately banned "addictive" design features for minors. The $250,000 penalty applied only to addiction/design provisions (HB 311), not to age verification (SB 152).</span></td>
+      <td class="enforcement-cell">Division of Consumer Protection; SB 152: $2,500/violation + private right of action. HB 311: $250,000/violation for addiction-causing features + $2,500/minor exposed to them.</td>
+      <td><span class="status-pill status-enjoined">Repealed</span><span class="status-note">Signed Mar 23, 2023. Effective date pushed to Oct 1, 2024 (SB 89, 2024). NetChoice sued Dec 2023 (NetChoice v. Reyes, D. Utah). Legislature fully repealed both bills Mar 2024 (via HB 464) and replaced with the Utah Minor Protection in Social Media Act (SB 194). These 2023 laws never took effect and are now moot. See 2024 replacement row below.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">SB 152 enrolled</span>
+  <a href="https://le.utah.gov/~2023/bills/sbillenr/SB0152.pdf" target="_blank">SB 152 (le.utah.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.dorsey.com/newsresources/publications/client-alerts/2023/4/new-utah-social-media-laws" target="_blank">Dorsey: Utah Social Media Laws (2023)</a>
+  <span class="sources-label">Repeal</span>
+  <a href="https://www.bytebacklaw.com/2024/03/utah-legislature-repeals-and-replaces-utah-social-media-regulation-act/" target="_blank">ByteBack: Repeal analysis (2024)</a>
+</td>
     </tr>
 
     <tr data-platform="social" data-status="enjoined" data-age="18">
       <td class="state-cell">Utah</td>
-      <td><span class="law-name">Child and Teen Social Media Protection Act (CSPA / SB 311)</span><span class="law-cite">Utah Code § 13-71-101 et seq. (2023)</span></td>
-      <td class="year-cell">2023<span class="eff-date">Mar 1, 2024</span></td>
+      <td><span class="law-name">Utah Minor Protection in Social Media Act (SB 194 / HB 464)</span><span class="law-cite">Utah Code §§ 13-71-101 et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Oct 1, 2024 (enjoined)</span></td>
       <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Social media platform; enacted as replacement for the 2023 Utah Social Media Regulation Act</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span>. "Commercially reasonable" methods including government ID. Minors need parental consent to create accounts; parental controls mandatory. <span class="method-note">Also required curfew hours (10pm–6:30am) — now blocked.</span></td>
-      <td class="enforcement-cell">State AG; $250,000/violation</td>
-      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">NetChoice v. Brown: preliminary injunction Sep 10, 2024. Appeal to 10th Circuit pending as of Mar 2026.</span></td>
+      <td class="method-cell"><span class="method-highlight">Age assurance system</span> (SB 194, § 13-71-201): measures reasonably calculated to identify whether a user is a minor with an <span class="method-highlight">accuracy rate of at least 95%</span>. Specific methods delegated to Division of Consumer Protection rulemaking; compliance safe harbor for approved systems. Parental consent required before minor can modify default privacy settings. <span class="method-note">Shift from "age verification" to "age assurance" language — accuracy-based standard. Also requires: default maximum privacy settings for minor accounts; ban on addictive engagement features (autoplay, infinite scroll, push notifications) for minors; supervisory tools for parents/guardians. HB 464 separately creates private right of action for mental health harm from algorithmically curated feeds.</span></td>
+      <td class="enforcement-cell">Division of Consumer Protection (SB 194): $2,500/violation; court may award attorney fees, costs, and investigative fees; order violations: up to $5,000/violation. HB 464 private right of action (NOT enjoined): $10,000+ per adverse mental health outcome for excessive use of algorithmically curated feeds.</td>
+      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">Signed Mar 13, 2024 by Gov. Cox; eff. Oct 1, 2024. Preliminary injunction granted Sep 10, 2024 (NetChoice v. Reyes, D. Utah, Judge Shelby) — entire SB 194 blocked on First Amendment grounds (burdens adults' access to protected speech). Utah appealed to 10th Circuit Oct 11, 2024; oral arguments Nov 2025; decision pending Mar 2026. HB 464 mental health private right of action is NOT enjoined and is in effect.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">SB 194 bill text</span>
+  <a href="https://le.utah.gov/~2024/bills/sbillint/SB0194.htm" target="_blank">SB 194 (le.utah.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.insideprivacy.com/social-media/utah-repeals-and-replaces-social-media-regulation-act/" target="_blank">Inside Privacy: SB 194 / HB 464</a>
+  <span class="sources-label">Injunction</span>
+  <a href="https://www.hunton.com/privacy-and-information-security-law/court-grants-motion-for-preliminary-injunction-on-utah-minor-protection-in-social-media-act" target="_blank">Hunton: Injunction Sep 2024</a>
+  <span class="sources-label">10th Circuit</span>
+  <a href="https://www.courthousenews.com/utah-urges-10th-circuit-to-reinstate-social-media-law-for-minors/" target="_blank">Courthouse News: 10th Circuit oral args</a>
+</td>
     </tr>
 
     <tr data-platform="social" data-status="active" data-age="18">
       <td class="state-cell">Connecticut</td>
-      <td><span class="law-name">SB 3 (2023 session)</span><span class="law-cite">Conn. Gen. Stat. § 42-515 et seq. (2023)</span></td>
-      <td class="year-cell">2023<span class="eff-date">Oct 1, 2023</span></td>
-      <td><span class="plat-badge plat-social">Social media (addictive design)</span></td>
+      <td><span class="law-name">SB 3 / PA 23-56 (2023)</span><span class="law-cite">Conn. Gen. Stat. § 42-515 et seq. (2023); minors provisions § 42-528 et seq.</span></td>
+      <td class="year-cell">2023<span class="eff-date">Oct 1, 2023 (health data); Jul 1, 2024 (§ 42-528 account deletion); Oct 1, 2024 (minors/social media provisions)</span></td>
+      <td><span class="plat-badge plat-social">Social media (addictive design)</span><span class="method-note">SB 3 is an omnibus privacy act (PA 23-56) amending the CTDPA — covers consumer health data, minors' protections, online dating safety, and more. Social media addictive design is one provision (§ 42-528) within a broader law. CTDPA applicability thresholds apply (≥100,000 consumers or ≥25,000 + 25% revenue from data sales).</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Social media platform; obligations triggered by "actual knowledge or willful disregard" of user's minor status (§ 42-528); broader minors' data protections apply to all CTDPA-covered controllers</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">"Actual knowledge" standard</span> — no affirmative age verification requirement. Obligations triggered when operator knows user is a minor. <span class="method-note">Restricts addictive design features for known minors.</span></td>
-      <td class="enforcement-cell">State AG; $50,000/violation</td>
-      <td><span class="status-pill status-active">In Effect</span></td>
-    </tr>
+      <td class="method-cell"><span class="method-highlight">"Actual knowledge or willful disregard"</span> standard (§ 42-528) — no affirmative age verification requirement. Obligations triggered when operator knows or willfully disregards that a user is a minor. Prohibits addictive design features (autoplay, infinite scroll, streaks, engagement-driven notifications) intended to significantly increase, sustain, or extend a minor's use. Also: bars targeted advertising and sale of minor's personal data; requires account deletion tools for minors/guardians (eff. Jul 1, 2024); bans collection of precise geolocation from minors; requires DPIAs for services likely accessed by minors. <span class="method-note">No affirmative AV mechanism. Minors 13+ may consent for themselves under SB 3, unlike laws in other states requiring parental consent.</span></td>
+      <td class="enforcement-cell">AG only; $5,000/willful violation under CUTPA (§ 42-110b); AG may also seek injunctive relief, restitution, and disgorgement. No private right of action. Cure period (60 days) expired Dec 31, 2024 — AG may now pursue enforcement immediately.</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Consumer health data provisions eff. Oct 1, 2023. Account deletion tools eff. Jul 1, 2024. Minors/social media provisions eff. Oct 1, 2024. Cure period ended Dec 31, 2024. AG enforcement underway; first public CTDPA enforcement action (TicketNetwork, $85,000 fine) occurred 2025. No First Amendment challenges filed as of Mar 2026. Further amendments (SB 1295) take effect Jul 1, 2026.</span></td>
+
+      <td class="sources-cell">
+  <span class="sources-label">Session law</span>
+  <a href="https://www.cga.ct.gov/2023/act/Pa/pdf/2023PA-00056-R00SB-00003-PA.PDF" target="_blank">PA 23-56 (cga.ct.gov)</a>
+  <span class="sources-label">AG overview</span>
+  <a href="https://portal.ct.gov/AG/Sections/Privacy/The-Connecticut-Data-Privacy-Act" target="_blank">Connecticut AG: CTDPA</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://fpf.org/blog/connecticut-shows-you-can-have-it-all/" target="_blank">FPF: SB 3 analysis</a>
+  <span class="sources-label">§ 42-528 text</span>
+  <a href="https://law.justia.com/codes/connecticut/title-42/chapter-743jj/section-42-528/" target="_blank">§ 42-528 (Justia)</a>
+</td></tr>
 
     <!-- ══ ERA HEADER: 2024 ══ -->
     <tr class="era-header" data-era="2024">
-      <td colspan="8">2024 — AADC expansion, social media feed laws, Florida & Georgia</td>
+      <td colspan="10">2024 — AADC expansion, social media feed laws, Florida & Georgia</td>
+    </tr>
+    <tr data-platform="social" data-status="active" data-age="18">
+      <td class="state-cell">Mississippi</td>
+      <td><span class="law-name">Walker Montgomery Protecting Children Online Act (HB 1126)</span><span class="law-cite">Miss. Code § 45-38-1 et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Jul 1, 2024</span></td>
+      <td><span class="plat-badge plat-social">Social media / digital services (broad)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Digital service provider must verify all users' ages and obtain parental consent for known minors; AG enforces</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">"Commercially reasonable efforts"</span> to verify age of <em>all</em> users (not just minors) at account creation, with level of certainty appropriate to risks. Parental consent required for known minors. Platforms must also develop and implement strategies to prevent known minors' exposure to "harmful material." <span class="method-note">Notably broader than most state social media laws — applies to any digital service allowing social interaction, public/semi-public profiles, and user content. Wide exemptions: platforms primarily functioning as news, search, commerce, gaming, or educational services. No specific verification methods enumerated.</span></td>
+      <td class="enforcement-cell">State AG; violation = unfair and deceptive trade practice under Miss. Code § 75-24-5; civil penalties up to $10,000/violation; also potential criminal penalties. No private right of action (limited declaratory/injunctive relief only).</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Signed Apr 30, 2024; initially enjoined Jul 1, 2024 (Judge Ozerden, S.D. Miss.); 5th Circuit vacated injunction Apr 17, 2025; SCOTUS declined emergency stay Aug 14, 2025 (Kavanaugh concurrence noted law "likely unconstitutional" under existing precedent); second preliminary injunction granted in part Jun 18, 2025 (S.D. Miss.); 5th Circuit stayed second injunction Jul 17, 2025 — law in effect pending merits. NetChoice v. Fitch ongoing as of Mar 2026. Bluesky geoblocked Mississippi users Aug 2025 rather than comply.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">LegiScan</span>
+  <a href="https://legiscan.com/MS/bill/HB1126/2024" target="_blank">MS HB1126 2024 (legiscan.com)</a>
+  <span class="sources-label">Codified statute</span>
+  <a href="https://law.justia.com/codes/mississippi/title-45/chapter-38/section-45-38-7/" target="_blank">§ 45-38-7 (Justia)</a>
+  <a href="https://law.justia.com/codes/mississippi/title-45/chapter-38/section-45-38-13/" target="_blank">§ 45-38-13 (Justia)</a>
+  <span class="sources-label">Law tracker</span>
+  <a href="https://onlinesafety.orrick.com/mississippi/" target="_blank">Orrick Online Safety Law Center</a>
+  <span class="sources-label">Codification</span>
+  <a href="https://billstatus.ls.state.ms.us/documents/2026/html/HB/1200-1299/HB1224IN.htm" target="_blank">HB1224 (2026) citing § 45-38-1</a>
+  <span class="sources-label">Litigation</span>
+  <a href="https://www.scotusblog.com/2025/08/supreme-court-allows-mississippi-restrictions-on-childrens-social-media-access-to-remain-in-place/" target="_blank">SCOTUSblog: SCOTUS Aug 2025</a>
+  <span class="sources-label">Bluesky response</span>
+  <a href="https://bsky.social/about/blog/08-22-2025-mississippi-hb1126" target="_blank">Bluesky blog post Aug 2025</a>
+</td>
     </tr>
 
-    <tr data-platform="online" data-status="enjoined" data-age="18">
+
+    <tr data-platform="online" data-status="partial" data-age="18">
       <td class="state-cell">California</td>
       <td><span class="law-name">CA Age-Appropriate Design Code Act (CAADCA / AB 2273)</span><span class="law-cite">Cal. Civ. Code § 1798.99.28 et seq. (2022, eff. 2024)</span></td>
       <td class="year-cell">2022<span class="eff-date">Jul 1, 2024 (blocked)</span></td>
       <td><span class="plat-badge plat-all">Online services — likely accessed by children</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Online service provider; age estimation or apply default privacy protections to all users</span></td>
       <td class="age-cell">Under 18</td>
       <td class="method-cell"><span class="method-highlight">Age estimation</span> with "reasonable level of certainty appropriate to risks," or apply privacy protections to all users regardless of age. First U.S. law to require age estimation (not just verification). <span class="method-note">Court found this would exacerbate rather than reduce privacy harms by requiring more data collection.</span></td>
       <td class="enforcement-cell">State AG; $2,500–$7,500/violation per child</td>
-      <td><span class="status-pill status-enjoined">Fully Enjoined</span><span class="status-note">NetChoice v. Bonta: fully enjoined on First Amendment grounds (N.D. Cal., Mar 13, 2025). Privacy/design provisions separately allowed. Appeal pending.</span></td>
-    </tr>
+      <td><span class="status-pill status-partial">Partially Enjoined</span><span class="status-note">Complex litigation history. (1) Sep 2023: district court (N.D. Cal.) enjoined entire statute — First Amendment. (2) Aug 16, 2024: 9th Circuit affirmed injunction only as to DPIA provisions (compelled speech); vacated remainder; remanded. (3) Mar 13, 2025: district court again fully enjoined on remand — "coverage definition" makes entire statute content-based. (4) Mar 12, 2026: 9th Circuit partially vacated — rejected facial challenge to coverage definition and age estimation; affirmed injunction on data use restrictions §§ 1798.99.31(b)(1)–(4) and dark patterns § 1798.99.31(b)(7) (unconstitutionally vague: "materially detrimental," "best interests," "well-being"). DPIA provisions remain enjoined from 2024 ruling. Age estimation § 1798.99.31(a)(5), default privacy settings, age-appropriate disclosures, and parental tools now in effect pending further district court proceedings. Case remanded on severability and "data management practices" question.</span></td>
 
-    <tr data-platform="social" data-status="partial" data-age="16">
+      <td class="sources-cell">
+  <span class="sources-label">Bill text</span>
+  <a href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202120220AB2273" target="_blank">AB 2273 (leginfo.ca.gov)</a>
+  <span class="sources-label">Mar 2026 ruling</span>
+  <a href="https://www.alstonprivacy.com/ninth-circuit-partially-lifts-injunction-against-california-age-appropriate-design-code-act/" target="_blank">Alston &amp; Bird: 9th Cir. Mar 12, 2026</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.cooley.com/news/insight/2026/2026-03-30-netchoice-v-bonta-ninth-circuit-narrows-injunction-against-californias-ageappropriate-design-code-act" target="_blank">Cooley: 9th Cir. ruling analysis</a>
+  <span class="sources-label">Litigation</span>
+  <a href="https://netchoice.org/netchoice-v-bonta/" target="_blank">NetChoice v. Bonta (netchoice.org)</a>
+</td></tr>
+
+    <tr data-platform="social" data-status="active" data-age="14">
       <td class="state-cell">Florida</td>
-      <td><span class="law-name">Digital Bill of Rights (HB 3)</span><span class="law-cite">Fla. Stat. § 501.1736 (2024, eff. Jan 1, 2025)</span></td>
+      <td><span class="law-name">Online Protections for Minors (HB 3)</span><span class="law-cite">Fla. Stat. §§ 501.1736–501.1738 (2024)</span></td>
       <td class="year-cell">2024<span class="eff-date">Jan 1, 2025</span></td>
-      <td><span class="plat-badge plat-social">Social media (under 16 ban)</span></td>
-      <td class="age-cell">Under 16</td>
-      <td class="method-cell"><span class="method-highlight">Age verification</span> to confirm users are 16+. "Reasonable" methods; includes government ID. Absolute prohibition on social media accounts for under-16s without parental consent. <span class="method-note">Also applies "known child" data-processing obligations under age 18.</span></td>
-      <td class="enforcement-cell">State AG; $50,000/violation</td>
-      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">Under-16 social media ban enjoined (Judge Walker, Jun 2025). "Known child" data provisions active. NetChoice litigation ongoing.</span></td>
-    </tr>
+      <td><span class="plat-badge plat-social">Social media + adult content</span><span class="method-note">Note: HB 3 is "Online Protections for Minors" — not the Florida Digital Bill of Rights, which is a separate 2023 comprehensive privacy law (SB 262, § 501.701 et seq.). HB 3 covers two distinct areas: § 501.1736 (social media age restrictions) and § 501.1737 (adult content AV), with § 501.1738 governing anonymous AV procedures.</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">§ 501.1736: social media platforms meeting coverage threshold (≥10% of daily active users under 16 spend 2+ hrs/day). § 501.1737: commercial entities distributing ≥33.3% material harmful to minors</span></td>
+      <td class="age-cell">Under 14 (ban); 14–15 (parental consent); 18 (adult content)</td>
+      <td class="method-cell"><span class="method-highlight">§ 501.1736 — Social media (two-tier age restriction):</span> No age verification method specified. Platforms must (1) <span class="method-highlight">absolutely prohibit</span> users under 14 from creating accounts and terminate existing under-14 accounts (90-day notice); (2) prohibit 14–15 year olds without <span class="method-highlight">confirmed parental/guardian consent</span>. If § (3) is enjoined, severance clause activates a full ban on 14–15s as well. <span class="method-highlight">§ 501.1737 — Adult content AV:</span> Entities distributing ≥33.3% material harmful to minors must offer both <span class="method-highlight">anonymous age verification</span> and <span class="method-highlight">standard age verification</span> (any commercially reasonable method approved by the entity); user chooses. Third-party verifiers governed by § 501.1738: no retention of PII beyond verification; no foreign-owned verifiers. <span class="method-note">Narrow platform definition: requires ≥10% of DAUs under 16 to spend 2+ hrs/day, plus algorithmic curation, plus addictive features (infinite scroll, push notifications, metrics, autoplay, livestream). Email/direct messaging exempt.</span></td>
+      <td class="enforcement-cell">Dept. of Legal Affairs (AG): $50,000/violation; punitive damages for consistent knowing/reckless conduct; attorney fees and costs. Private right of action for minor account holders: up to $10,000 damages per violation (§ 501.1736(6)); 1-year limitations period. No private right of action under § 501.1737 (adult content section).</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Signed Mar 25, 2024; eff. Jan 1, 2025. AG voluntarily stayed enforcement while first PI pending. First preliminary injunction denied Mar 13, 2025 (Judge Walker, N.D. Fla.) — law in effect. Second preliminary injunction granted Jun 3, 2025. 11th Circuit stayed second PI Nov 25, 2025 — law in effect pending appeal. CCIA &amp; NetChoice v. Uthmeier ongoing as of Mar 2026. Free Speech Coalition v. Paxton (adult content AV) decided Jun 2025 by SCOTUS, upholding Texas's similar adult content AV law — broadly favorable precedent for § 501.1737.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Enrolled bill</span>
+  <a href="https://www.flsenate.gov/Session/Bill/2024/3/BillText/er/PDF" target="_blank">HB 3 enrolled (flsenate.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.wsgrdataadvisor.com/2024/04/state-social-media-law-patchwork-emerging-florida-passes-law-to-restrict-minors-use-of-online-services/" target="_blank">Wilson Sonsini: HB 3 analysis</a>
+  <span class="sources-label">Law tracker</span>
+  <a href="https://onlinesafety.orrick.com/florida/" target="_blank">Orrick Online Safety Law Center</a>
+</td></tr>
 
     <tr data-platform="online" data-status="active" data-age="18">
       <td class="state-cell">Maryland</td>
       <td><span class="law-name">Maryland Age-Appropriate Design Code (HB 603 / SB 571)</span><span class="law-cite">Md. Code, Com. Law § 14-4301 et seq. (2024)</span></td>
       <td class="year-cell">2024<span class="eff-date">Oct 1, 2024</span></td>
       <td><span class="plat-badge plat-all">Online services — reasonably likely accessed by children</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Online service provider; obligations triggered at product level — "reasonably likely to be accessed by children" based on audience composition factors, not individual user knowledge</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">NO age estimation required.</span> "Reasonably likely to be accessed" determined by audience composition factors. Obligations apply to "known" minors only. <span class="method-note">Expressly prohibits processing personal data for purposes of age estimation — deliberate design choice to avoid CAADCA's constitutional vulnerability.</span></td>
-      <td class="enforcement-cell">MD Div. Consumer Protection; $2,500–$7,500/violation per child</td>
-      <td><span class="status-pill status-active">In Effect</span><span class="status-note">NetChoice v. Brown (D. Md.) filed Feb 2025; case pending as of Mar 2026. DPIAs required Apr 1, 2026.</span></td>
-    </tr>
+      <td class="method-cell"><span class="method-highlight">NO age estimation required.</span> "Reasonably likely to be accessed" determined by categorical audience composition factors (modeled on COPPA's "directed to children" standard). Obligations apply at the product/service level, not to individually identified minors. <span class="method-note">Expressly prohibits processing personal data for purposes of age estimation — deliberate design choice to avoid CAADCA's constitutional vulnerability. Requires: DPIA for each covered product (due Apr 1, 2026); default high-privacy settings for children; age-appropriate privacy disclosures; parental monitoring tools; prohibition on "dark patterns" inducing children to provide unnecessary data.</span></td>
+      <td class="enforcement-cell">MD Div. Consumer Protection (AG); $2,500/negligent violation per affected child; $7,500/intentional violation per affected child. 90-day cure for entities in substantial compliance with DPIA requirement. No private right of action.</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Signed May 9, 2024; eff. Oct 1, 2024. NetChoice v. Brown (D. Md.) filed Feb 3, 2025 (First Amendment + COPPA/§ 230 preemption). Motion to dismiss denied Nov 24, 2025 (Judge Bennett) — case proceeds to discovery; no preliminary injunction sought. Scheduling order Jan 6, 2026; status report due May 21, 2026. Law remains fully in effect. DPIA compliance deadline Apr 1, 2026.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Bill text</span>
+  <a href="https://mgaleg.maryland.gov/2024RS/bills/hb/hb0603T.pdf" target="_blank">HB 603 (mgaleg.maryland.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://fpf.org/blog/new-age-appropriate-design-code-framework-takes-hold-in-maryland/" target="_blank">FPF: Maryland AADC analysis</a>
+  <a href="https://perkinscoie.com/insights/blog/marylands-enactment-age-appropriate-design-code-act" target="_blank">Perkins Coie: MD vs CA AADC</a>
+  <span class="sources-label">Litigation</span>
+  <a href="https://netchoice.org/netchoice-v-brown-maryland/" target="_blank">NetChoice v. Brown (netchoice.org)</a>
+  <a href="https://perkinscoie.com/insights/blog/netchoice-challenge-maryland-kids-code-moves-forward-motion-dismiss-denied" target="_blank">Perkins Coie: MTD denied Nov 2025</a>
+</td></tr>
 
-    <tr data-platform="social" data-status="active" data-age="16">
+    <tr data-platform="social" data-status="enjoined" data-age="16">
       <td class="state-cell">Georgia</td>
-      <td><span class="law-name">Protecting Georgia's Children on Social Media Act (SB 351)</span><span class="law-cite">O.C.G.A. § 39-5-1 et seq. (2024)</span></td>
-      <td class="year-cell">2024<span class="eff-date">Jul 1, 2025</span></td>
-      <td><span class="plat-badge plat-social">Social media</span></td>
-      <td class="age-cell">Under 16</td>
-      <td class="method-cell"><span class="method-highlight">"Reasonable age verification"</span> defined as: digitized ID card, mobile ID credential, or comparable government ID verification. Parental consent required for minors under 16 to create accounts.</td>
-      <td class="enforcement-cell">State AG; $10,000/violation; no private right of action</td>
-      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Active as of Jul 1, 2025. AG investigations into Roblox and others ongoing. No injunction as of Mar 2026.</span></td>
-    </tr>
+      <td><span class="law-name">Protecting Georgia's Children on Social Media Act (SB 351)</span><span class="law-cite">O.C.G.A. §§ 39-5-1 et seq. / 39-6-1 et seq. (2024)</span></td>
+      <td class="year-cell">2024<span class="eff-date">Jul 1, 2025 (enjoined before taking effect)</span></td>
+      <td><span class="plat-badge plat-social">Social media + adult content</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">§ 39-6: social media platforms must make "commercially reasonable efforts" to verify all users' ages; § 39-5: adult content sites (≥33.3% harmful to minors) must verify via digitized ID or government-issued ID</span></td>
+      <td class="age-cell">Under 16 (social media); 18 (adult content)</td>
+      <td class="method-cell"><span class="method-highlight">§ 39-6-2 — Social media:</span> <span class="method-highlight">"Commercially reasonable efforts"</span> to verify age of all users; anyone who cannot be verified must be treated as a minor. Parental consent required for users under 16. Methods not enumerated — may include banking/credit card data, facial recognition, fingerprint, DOB entry. <span class="method-highlight">§ 39-5 — Adult content:</span> <span class="method-highlight">Digitized identification card or government-issued ID</span> required to confirm users are 18+. <span class="method-note">The specific ID requirement applies only to the adult content section (§ 39-5), not to social media. Social media age verification method is open-ended.</span></td>
+      <td class="enforcement-cell">State AG; $2,500/violation for social media (§ 39-6-4); $10,000/violation for adult content without AV (§ 39-5). 90-day notice-and-cure before enforcement. No private right of action.</td>
+      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">Signed Apr 23, 2024; eff. Jul 1, 2025. NetChoice v. Carr (N.D. Ga., No. 1:25-cv-2422-AT) filed May 1, 2025. Preliminary injunction granted Jun 26, 2025 (Judge Totenberg) — law never took effect; enjoined the day before effective date on First Amendment grounds (overbroad, inapt tailoring, rife with exemptions). Georgia AG appealed to 11th Circuit. Oral arguments heard Mar 10, 2026; decision pending as of Mar 2026.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Injunction opinion</span>
+  <a href="https://netchoice.org/wp-content/uploads/2025/06/2025-06-26-NetChoice-v.-Carr-Georgia-SB-351-INJUNCTION-GRANTED_Opinion-dckt-34_0.pdf" target="_blank">NetChoice v. Carr opinion (Jun 26, 2025)</a>
+  <span class="sources-label">Litigation</span>
+  <a href="https://netchoice.org/netchoice-v-carr-georgia-sb-351/" target="_blank">NetChoice v. Carr (netchoice.org)</a>
+  <span class="sources-label">GA AG</span>
+  <a href="https://law.georgia.gov/press-releases/2026-03-10/carr-continues-fight-keep-kids-safe-online" target="_blank">GA AG: 11th Circuit oral args (Mar 2026)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.courthousenews.com/georgia-becomes-latest-state-to-block-law-restricting-social-media-for-children/" target="_blank">Courthouse News: injunction (Jun 2025)</a>
+</td></tr>
 
-    <tr data-platform="social" data-status="rulemaking" data-age="18">
+    <tr data-platform="social" data-status="partial" data-age="18">
       <td class="state-cell">California</td>
       <td><span class="law-name">Protecting Our Kids from Social Media Addiction Act (SB 976)</span><span class="law-cite">Cal. Health & Safety Code § 27000 et seq. (2024)</span></td>
-      <td class="year-cell">2024<span class="eff-date">Jan 1, 2027</span></td>
+      <td class="year-cell">2024<span class="eff-date">Feb 1, 2025 (extended from Jan 1, 2025 by district court order)</span></td>
       <td><span class="plat-badge plat-social">Social media — addictive feeds</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Operator of an "addictive internet-based service or application" that offers an "addictive feed" as a significant part of its service. An addictive feed = content algorithmically selected/ranked based on user data</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">"Age assurance"</span> — specific methods to be defined in AG rulemaking. Operators must "reasonably determine" whether user is minor. AG held public hearing Nov 2025; final rules due Jan 2027. <span class="method-note">Privacy advocates urge feature-gating approach over platform-wide verification. SB 976 does not require platform-wide age-gating.</span></td>
-      <td class="enforcement-cell">State AG; civil enforcement only</td>
-      <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">Partially enjoined Dec 31, 2024 (time-of-day restrictions blocked; age assurance provisions deferred to rulemaking). Rulemaking underway; NPRM expected 2026.</span></td>
-    </tr>
+      <td class="method-cell"><span class="method-highlight">"Actual knowledge"</span> standard currently operative — obligation triggered when operator actually knows user is a minor. No affirmative age assurance requirement yet in force. <span class="method-highlight">AG rulemaking</span> will define age assurance methods and parental consent mechanisms; regulations due by Jan 1, 2027. AG held public meeting Nov 5, 2025 as part of preliminary rulemaking; formal NPRM expected 2026. <span class="method-note">Once regulations are in place, age assurance will gate parental consent for addictive feeds. Until then: platforms must not provide addictive feeds to users they actually know are minors without parental consent.</span></td>
+      <td class="enforcement-cell">State AG; $2,500/affected child (negligent violation); $7,500/affected child (intentional violation). Civil enforcement only; no private right of action.</td>
+      <td><span class="status-pill status-partial">Partially Enjoined</span><span class="status-note">Signed Sep 20, 2024; eff. Feb 1, 2025 (district court extended from Jan 1). Complex section-by-section status: (1) Dec 31, 2024: district court (N.D. Cal.) enjoined notification time-of-day restrictions §§ 27002(a), 27002(b)(1), and 27005. (2) Sep 9, 2025: 9th Circuit (NetChoice v. Bonta) upheld addictive feed restrictions and default privacy settings — court found NetChoice lacked standing to challenge on behalf of members without platform-specific evidence; these provisions now in effect. 9th Circuit also affirmed injunction on § 27002(b)(3). Core addictive feed and default privacy provisions in effect as of Sep 2025. AG rulemaking on age assurance underway; regulations due Jan 1, 2027.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Bill text</span>
+  <a href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202320240SB976" target="_blank">SB 976 (leginfo.ca.gov)</a>
+  <span class="sources-label">AG rulemaking</span>
+  <a href="https://oag.ca.gov/sb976" target="_blank">CA AG SB 976 rulemaking page</a>
+  <span class="sources-label">9th Circuit Sep 2025</span>
+  <a href="https://www.hunton.com/privacy-and-cybersecurity-law-blog/ninth-circuit-upholds-addictive-social-media-feed-ban-and-default-privacy-settings-for-minors-in-californias-protecting-our-kids-from-social-media-addiction-act" target="_blank">Hunton: 9th Cir. Sep 9, 2025</a>
+  <span class="sources-label">Section status</span>
+  <a href="https://onlinesafety.orrick.com/california/" target="_blank">Orrick Online Safety Law Center</a>
+</td></tr>
 
     <tr data-platform="social" data-status="rulemaking" data-age="18">
       <td class="state-cell">New York</td>
       <td><span class="law-name">Stop Addictive Feeds Exploitation (SAFE) for Kids Act</span><span class="law-cite">N.Y. Gen. Bus. Law § 1500 et seq. (2024)</span></td>
       <td class="year-cell">2024<span class="eff-date">~Mid-2027 (est.)</span></td>
       <td><span class="plat-badge plat-social">Social media — addictive feeds & nighttime notifications</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Operator of an "addictive internet-based service or application" that offers an addictive feed as a significant part of its service; addictive feed = algorithmically personalized content feed</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">"Commercially reasonable and technically feasible"</span> age determination. NPRM (Sep 15, 2025) proposed 98% circumvention-detection accuracy threshold and five age brackets. Options include: email/phone cross-check, facial age estimation, government ID, open banking, zero-knowledge proof. <span class="method-note">Comment period closed Dec 1, 2025. Final rules expected late 2026.</span></td>
-      <td class="enforcement-cell">State AG; $5,000/violation; no private right of action</td>
-      <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">NPRM issued Sep 2025. OAG has 1 year from close of comment period to finalize rules. Effective 180 days after final rules.</span></td>
-    </tr>
+      <td class="method-cell"><span class="method-highlight">"Commercially reasonable and technically feasible"</span> age determination methods — to be specified by AG rulemaking. NPRM (Sep 15, 2025) proposed 98% circumvention-detection accuracy threshold and five age brackets; options include email/phone cross-check, facial age estimation, government ID, open banking, zero-knowledge proof. <span class="method-note">Statutory constraint: regulations must include at least one method that does not rely solely on government-issued ID or biometrics, so that users can maintain anonymity. Age/parental consent data must be deleted immediately after use and may not be used for any other purpose. Comment period closed Dec 1, 2025. AG has 1 year from close to finalize rules; law takes effect 180 days after.</span></td>
+      <td class="enforcement-cell">State AG; $5,000/violation; no private right of action.</td>
+      <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">Signed Jun 20, 2024. Not yet in effect — takes effect 180 days after AG finalizes rules. ANPRM Aug 2024; NPRM Sep 15, 2025; comment period closed Dec 1, 2025; AG has until ~Dec 1, 2026 to finalize; estimated effective date ~Jun 2027. No legal challenge filed as of Mar 2026 — notable given that nearly every comparable state law has been challenged by NetChoice/CCIA. Companion law: NY Child Data Protection Act (CDPA, S7695B) took effect Jun 20, 2025.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Bill text</span>
+  <a href="https://www.nysenate.gov/legislation/bills/2023/S7694/amendment/A" target="_blank">S7694A (nysenate.gov)</a>
+  <span class="sources-label">AG rulemaking</span>
+  <a href="https://ag.ny.gov/resources/individuals/consumer-issues/technology/protecting-children-online" target="_blank">NY AG: SAFE for Kids rulemaking</a>
+  <span class="sources-label">NPRM</span>
+  <a href="https://ag.ny.gov/press-release/2025/attorney-general-james-releases-proposed-rules-safe-kids-act-restrict-addictive" target="_blank">AG press release: NPRM Sep 2025</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.dwt.com/blogs/privacy--security-law-blog/2024/06/child-online-safety-and-data-privacy-in-new-york" target="_blank">Davis Wright Tremaine: SAFE + CDPA</a>
+</td></tr>
 
     <!-- ══ ERA HEADER: 2025 ══ -->
     <tr class="era-header" data-era="2025">
-      <td colspan="8">2025 — App store laws, new AADCs, device-level signals, AI chatbots</td>
+      <td colspan="10">2025 — App store laws, new AADCs, device-level signals, AI chatbots</td>
     </tr>
 
     <tr data-platform="social" data-status="enjoined" data-age="18">
       <td class="state-cell">Louisiana</td>
-      <td><span class="law-name">HB 570 (App Store Parental Consent Act)</span><span class="law-cite">La. Rev. Stat. § 51:1752 (2025)</span></td>
-      <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
-      <td><span class="plat-badge plat-appstore">App stores</span></td>
+      <td><span class="law-name">Secure Online Child Interaction and Age Limitation Act (Act 456 / SB 162)</span><span class="law-cite">La. Rev. Stat. §§ 51:1751–1756 (2023)</span></td>
+      <td class="year-cell">2023<span class="eff-date">Jul 1, 2024 (never took effect)</span></td>
+      <td><span class="plat-badge plat-social">Social media (≥5M users)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Social media platforms with ≥5M account holders; "commercially reasonable efforts" to verify age of all users</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">App store-level parental consent</span> before minor downloads or purchases apps. App stores must verify user age and associate minors with parental accounts.</td>
-      <td class="enforcement-cell">State AG; civil penalties</td>
-      <td><span class="status-pill status-enjoined">Permanently Enjoined</span><span class="status-note">NetChoice v. Murrill: permanently enjoined Dec 15, 2025 on First Amendment grounds.</span></td>
+      <td class="method-cell"><span class="method-highlight">"Commercially reasonable efforts"</span> to verify age of account holders (§ 51:1752(A)); level of certainty appropriate to risks. Parental consent required for known minors. Also prohibited: direct messaging between adults and unconnected minors; advertising using minor's personal data; excessive data collection from minor accounts.</td>
+      <td class="enforcement-cell">AG (Public Protection Division); $2,500/violation for social media violations; $10,000/violation for advertising violations targeting minors. AG appealing permanent injunction to 5th Circuit.</td>
+      <td><span class="status-pill status-enjoined">Permanently Enjoined</span><span class="status-note">Signed 2023; eff. Jul 1, 2024. Lawsuit filed Mar 18, 2025 (NetChoice v. Murrill, M.D. La., No. 3:25-cv-00231). Permanent injunction granted Dec 15, 2025 (Judge deGravelles) — First Amendment as-applied challenge succeeded; law unconstitutionally vague and overbroad; "social media platform" definition unclear. AG Murrill appealing to 5th Circuit. Court also ordered state to pay NetChoice's attorney fees.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Opinion</span>
+  <a href="https://netchoice.org/wp-content/uploads/2025/12/Louisiana-MSJ_Granted.pdf" target="_blank">NetChoice v. Murrill opinion (Dec 15, 2025)</a>
+  <span class="sources-label">Coverage</span>
+  <a href="https://www.nola.com/news/courts/louisiana-social-media-age-verification-unconstitutional/article_aec1f16c-aba2-41cb-83b0-9180d953e2c5.html" target="_blank">NOLA.com: permanent injunction</a>
+</td>
     </tr>
 
     <tr data-platform="appstore" data-status="pending" data-age="18">
-      <td class="state-cell">Utah</td>
-      <td><span class="law-name">SB 142 (App Store Age Verification)</span><span class="law-cite">Utah Code § 13-71-201 et seq. (2025)</span></td>
-      <td class="year-cell">2025<span class="eff-date">May 6, 2026</span></td>
-      <td><span class="plat-badge plat-appstore">App stores</span></td>
+      <td class="state-cell">Louisiana</td>
+      <td><span class="law-name">Protection of Children on Applications Act (HB 570 / Act 481)</span><span class="law-cite">La. Rev. Stat. §§ 51:1771–1775 (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jul 1, 2026</span></td>
+      <td><span class="plat-badge plat-appstore">App stores + developers</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-appstore">App store</span><span class="impl-note">Covered application store providers (Apple App Store, Google Play) and developers; both have independent obligations</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">App store-level age verification + parental consent</span> before minors download or purchase apps. App stores must create parental control mechanisms and associate minor accounts with parent/guardian accounts.</td>
-      <td class="enforcement-cell">State AG; $2,500/violation</td>
-      <td><span class="status-pill status-pending">Not Yet in Effect</span><span class="status-note">Eff. May 6, 2026. No injunction as of Mar 2026. NetChoice lawsuit possible given similar Louisiana law was enjoined.</span></td>
+      <td class="method-cell"><span class="method-highlight">App store age verification</span> at account creation: commercially available methods "reasonably designed to ensure accuracy," including DMV real-time verification (§ 1772). Four-tier categorization: child (&lt;13), younger teen (13–15), older teen (16–17), adult (18+). Minor accounts must be affiliated with a verified parent account. <span class="method-highlight">Parental consent</span> required before minor downloads, purchases, or makes in-app purchases; renewed consent required on significant app changes. Developers receive age category data from app store and must independently enforce. <span class="method-note">Data minimization: age data used only for verification and compliance; transmitted via industry-standard encryption. 45-day cure period before enforcement.</span></td>
+      <td class="enforcement-cell">State AG; $10,000/violation; 45-day cure period for initial violations. No private right of action.</td>
+      <td><span class="status-pill status-pending">Pending</span><span class="status-note">Signed Jun 30, 2025 by Gov. Landry; eff. Jul 1, 2026. Becomes Act No. 481. Passed 98-0 in House, 38-0 in Senate. No legal challenge filed as of Mar 2026. Louisiana joins Utah (May 2025) and Texas (Jan 2026) in enacting app store accountability legislation.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Enrolled bill</span>
+  <a href="https://www.legis.la.gov/legis/ViewDocument.aspx?d=1425304" target="_blank">HB 570 enrolled (legis.la.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.bassberry.com/news/apps-and-minors-new-compliance-frontiers-and-risks-in-louisiana-utah-and-texas/" target="_blank">Bass Berry: LA/UT/TX app store laws</a>
+</td>
     </tr>
 
-    <tr data-platform="appstore" data-status="active" data-age="18">
+    <tr data-platform="appstore" data-status="enjoined" data-age="18">
+      <td class="state-cell">Utah</td>
+      <td><span class="law-name">App Store Accountability Act (SB 142)</span><span class="law-cite">Utah Code §§ 13-75-101 et seq. (2025)</span></td>
+      <td class="year-cell">2025<span class="eff-date">May 7, 2025 (law in effect); May 6, 2026 (compliance deadline); Dec 31, 2026 (private right of action)</span></td>
+      <td><span class="plat-badge plat-appstore">App stores + developers</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-appstore">App store</span><span class="impl-note">Covered app store providers (Apple App Store, Google Play) and developers; both have independent obligations under the Act</span></td>
+      <td class="age-cell">Under 18</td>
+      <td class="method-cell"><span class="method-highlight">App store age verification</span> at account creation: commercially available methods; four-tier categorization (child &lt;13, younger teen 13–15, older teen 16–17, adult 18+). Minor accounts must affiliate with verified parent account. <span class="method-highlight">Parental consent</span> required before minor downloads, purchases apps, or makes in-app purchases; renewed consent required on significant app changes. Developers receive age category data from app store and must independently enforce age restrictions. <span class="method-note">Division of Consumer Protection to promulgate implementing rules. Data minimization required; age data used only for verification and compliance purposes.</span></td>
+      <td class="enforcement-cell">Division of Consumer Protection; $2,500/violation. Private right of action for minors/parents against app store providers (§ 13-75-201(2)) and developers (§ 13-75-202(4)) — effective Dec 31, 2026.</td>
+      <td><span class="status-pill status-enjoined">Challenged — Enforcement Stayed</span><span class="status-note">Signed Mar 26, 2025 by Gov. Cox; law in effect May 7, 2025; compliance deadline May 6, 2026. CCIA sued Feb 5, 2026 (CCIA v. Brown, D. Utah, No. 2:26-cv-00094, Judge Campbell) — First Amendment challenge, same theory as Texas app store law (which CCIA obtained PI against Dec 23, 2025). Court issued temporary enforcement stay Feb 25, 2026 — Utah cannot enforce while PI briefing is pending. Decision on preliminary injunction pending as of Mar 2026. First state to enact app store accountability legislation.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Enrolled bill</span>
+  <a href="https://le.utah.gov/Session/2025/bills/enrolled/SB0142.pdf" target="_blank">SB 142 enrolled (le.utah.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.insideprivacy.com/united-states/state-legislatures/utah-enacts-app-store-accountability-act/" target="_blank">Inside Privacy: SB 142 analysis</a>
+  <span class="sources-label">Litigation</span>
+  <a href="https://ccianet.org/news/2026/02/ccia-challenges-unconstitutional-app-store-law-in-utah/" target="_blank">CCIA v. Brown (ccianet.org)</a>
+</td></tr>
+
+    <tr data-platform="appstore" data-status="enjoined" data-age="18">
       <td class="state-cell">Texas</td>
       <td><span class="law-name">App Store Accountability Act (SB 2420)</span><span class="law-cite">Tex. Bus. & Com. Code § 509A.001 et seq. (2025)</span></td>
       <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
       <td><span class="plat-badge plat-appstore">App stores</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-appstore">App store</span><span class="impl-note">Apple App Store / Google Play Store; covers downloads, purchases, and in-app purchases</span></td>
       <td class="age-cell">Under 18</td>
       <td class="method-cell"><span class="method-highlight">App store-level parental consent</span> before minors download, purchase, or make in-app purchases. App stores must verify user age and associate minor accounts with parental accounts. <span class="method-note">Broader than Louisiana/Utah — applies to in-app purchases too.</span></td>
-      <td class="enforcement-cell">State AG; civil penalties</td>
-      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jan 1, 2026. CCIA filed lawsuit Oct 2025 (Judge Pitman). Case pending as of Mar 2026.</span></td>
-    </tr>
+      <td class="enforcement-cell">State AG; $10,000/violation. No private right of action.</td>
+      <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">Signed May 2025; eff. Jan 1, 2026 (never took effect). CCIA sued Oct 16, 2025 (CCIA v. Paxton, W.D. Tex., Judge Pitman); consolidated with separate SEAT challenge. Preliminary injunction granted Dec 23, 2025 — entire statute enjoined; found content-based, fails strict scrutiny; overbroad and underinclusive; key provisions unconstitutionally vague (age rating standards, "significant change" definition); not severable. AG Paxton appealed to 5th Circuit Dec 23, 2025; appeal pending as of Mar 2026.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Litigation</span>
+  <a href="https://ccianet.org/news/2025/12/judge-blocks-texass-app-store-accountability-act-as-unconstitutional-speech-restriction/" target="_blank">CCIA: injunction Dec 23, 2025</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://natlawreview.com/article/federal-judge-enjoins-enforcement-texas-app-store-age-verification-law" target="_blank">National Law Review: injunction analysis</a>
+</td></tr>
 
     <tr data-platform="online" data-status="active" data-age="18">
       <td class="state-cell">Nebraska</td>
-      <td><span class="law-name">Age-Appropriate Online Design Code Act (LB 1096)</span><span class="law-cite">Neb. Rev. Stat. § 87-4001 et seq. (2025)</span></td>
+      <td><span class="law-name">Age-Appropriate Online Design Code Act (LB 504)</span><span class="law-cite">Neb. Rev. Stat. §§ 87-1301 et seq. (2025)</span></td>
       <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
-      <td><span class="plat-badge plat-all">Online services — all types</span></td>
+      <td><span class="plat-badge plat-all">Online services — likely accessed by minors</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Covered online services: entities with &gt;$25M annual gross revenue AND deriving ≥50% of revenue from sale/sharing of consumers' personal data; processing personal data at scale. "Actual knowledge" standard for individual obligations.</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">No explicit age verification requirement.</span> "Actual knowledge" standard; obligations triggered when operator knows or should know user is a minor. Prohibits dark patterns outright — broadest dark-pattern ban of any state. <span class="method-note">Narrower scope than Vermont: applies only to businesses generating majority revenue from online services and with &lt;50,000 users.</span></td>
-      <td class="enforcement-cell">State AG; $50,000/violation (penalties from Jul 2026)</td>
-      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jan 1, 2026; penalty enforcement from Jul 1, 2026. No lawsuits filed as of Mar 2026.</span></td>
-    </tr>
+      <td class="method-cell"><span class="method-highlight">No explicit age verification requirement.</span> "Actual knowledge" standard — obligations triggered when operator knows a user is a covered minor. Prohibits dark patterns outright; requires default maximum privacy settings for minors; bans targeted advertising to known minors; restricts autoplay, infinite scroll, and other engagement-extending design features; bars collection of precise geolocation. <span class="method-note">Deliberate design choice to avoid CAADCA's constitutional vulnerability. AG rulemaking underway (initiated Jul 1, 2025; final rules due Jan 1, 2027).</span></td>
+      <td class="enforcement-cell">State AG; $50,000/violation (AG may not bring civil penalty actions until Jul 1, 2026). Violations = deceptive trade practice under Nebraska Uniform Deceptive Trade Practices Act. No private right of action.</td>
+      <td><span class="status-pill status-active">In Effect</span><span class="status-note">Signed May 30, 2025 by Gov. Pillen; eff. Jan 1, 2026. Civil penalty enforcement begins Jul 1, 2026. AG rulemaking underway; final rules due Jan 1, 2027. No legal challenge filed as of Mar 2026.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Codified statute</span>
+  <a href="https://nebraskalegislature.gov/laws/statutes.php?statute=87-1301" target="_blank">§ 87-1301 (nebraskalegislature.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.wsgr.com/en/insights/nebraska-and-vermont-pass-age-appropriate-design-codes.html" target="_blank">Wilson Sonsini: Nebraska &amp; Vermont AADCs</a>
+  <a href="https://www.koleyjessen.com/insights/publications/nebraska-to-enact-childrens-online-privacy-by-design-law" target="_blank">Koley Jessen: LB 504 analysis</a>
+</td></tr>
 
     <tr data-platform="online" data-status="rulemaking" data-age="18">
       <td class="state-cell">Vermont</td>
       <td><span class="law-name">Vermont Age-Appropriate Design Code Act (S.69 / Act 63)</span><span class="law-cite">9 V.S.A. § 2449a et seq. (2025)</span></td>
-      <td class="year-cell">2025<span class="eff-date">Jan 1, 2027</span></td>
+      <td class="year-cell">2025<span class="eff-date">Jan 1, 2027 (rulemaking authority: Jul 1, 2025)</span></td>
       <td><span class="plat-badge plat-all">Online services — reasonably likely accessed by minors (≥2% minor audience)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Covered businesses: generate a majority of annual revenue from online services AND have products reasonably likely to be accessed by minors. Specific age assurance methods to be defined in AG rulemaking.</span></td>
       <td class="age-cell">Under 18</td>
-      <td class="method-cell"><span class="method-highlight">AG rulemaking required</span> — statute mandates that rules <em>prioritize user privacy and accessibility over accuracy</em> of age assurance methods. Unique statutory directive: privacy comes first. Methods must be "commercially reasonable and technically feasible." <span class="method-note">Informal rulemaking phase underway; formal NPRM Spring 2026; final rules by Jan 2027.</span></td>
+      <td class="method-cell"><span class="method-highlight">AG rulemaking required</span> — statute mandates that rules <em>prioritize user privacy and accessibility over accuracy</em> of age assurance methods. Unique statutory directive: privacy comes first. Methods must be "commercially reasonable and technically feasible." <span class="method-note">≥2% minor audience threshold for "reasonably likely to be accessed" (§ 2449a(26)). Covered businesses must generate majority annual revenue from online services (§ 2449a(10)(B)). Minimum duty of care: use of minor's data must not result in reasonably foreseeable emotional distress, compulsive use, or discrimination. Also: default maximum privacy settings; algorithmic transparency requirements; push notification limits; restrictions on dark patterns and geolocation.</span></td>
+      <td class="enforcement-cell">AG; $10,000/violation; 60-day cure period. Private right of action under Vermont consumer protection law: actual damages or $500/first violation (whichever is greater). Also note: signed by Gov. Scott despite his stated expectation of legal challenge.</td>
+      <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">Signed Jun 12, 2025 by Gov. Scott — with notable statement: "I recognize this new law will likely face a legal challenge. But I'm hopeful [delay until Jan 1, 2027] will allow enough time to provide clarity and change the law if necessary." Rulemaking authority took effect Jul 1, 2025; Vermont AG soliciting informal stakeholder comments. Formal NPRM expected Spring 2026. No lawsuit filed as of Mar 2026.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Enrolled act</span>
+  <a href="https://legislature.vermont.gov/Documents/2026/Docs/ACTS/ACT063/ACT063%20As%20Enacted.pdf" target="_blank">Act 63 as enacted (legislature.vermont.gov)</a>
+  <span class="sources-label">AG rulemaking</span>
+  <a href="https://ago.vermont.gov/vermont-age-appropriate-design-code-rulemaking" target="_blank">Vermont AG: AADC rulemaking</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.zwillgen.com/privacy/vermont-signs-age-appropriate-design-code-into-law/" target="_blank">ZwillGen: VT AADC analysis</a>
+  <a href="https://www.wsgr.com/en/insights/nebraska-and-vermont-pass-age-appropriate-design-codes.html" target="_blank">Wilson Sonsini: Nebraska &amp; Vermont AADCs</a>
+</td>te">Informal rulemaking phase underway; formal NPRM Spring 2026; final rules by Jan 2027.</span></td>
       <td class="enforcement-cell">State AG; $10,000/violation; also private right of action ($500/initial violation)</td>
       <td><span class="status-pill status-rulemaking">In Rulemaking</span><span class="status-note">Informal stakeholder comment phase open as of Mar 2026. Formal NPRM expected Spring 2026. Most privacy-protective statutory mandate of any U.S. age assurance law.</span></td>
-    </tr>
+    
+      <td class="sources-cell">—</td></tr>
 
     <tr data-platform="online" data-status="pending" data-age="18">
       <td class="state-cell">California</td>
-      <td><span class="law-name">Digital Age Assurance Act (AB 1043)</span><span class="law-cite">Cal. Bus. & Prof. Code § 22949.90 et seq. (2025)</span></td>
+      <td><span class="law-name">Digital Age Assurance Act (AB 1043)</span><span class="law-cite">Cal. Civ. Code § 1798.500 et seq. (2025)</span></td>
       <td class="year-cell">2025<span class="eff-date">Jan 1, 2027</span></td>
-      <td><span class="plat-badge plat-appstore">OS-level / all mobile apps</span></td>
-      <td class="age-cell">Age brackets (all)</td>
-      <td class="method-cell"><span class="method-highlight">OS-level age bracket signal</span>. Operating system providers must offer interface at account setup prompting users to indicate birth date or age. App developers request age signal from OS on download and launch. <span class="method-note">Places collection burden on OSPs (Apple, Google), not app stores or developers. Unlike app store laws, applies to all apps regardless of content. Age brackets transmitted as signal, not raw age data.</span></td>
-      <td class="enforcement-cell">State AG; civil enforcement</td>
-      <td><span class="status-pill status-pending">Not Yet in Effect</span><span class="status-note">Eff. Jan 1, 2027. Novel OS-level architecture, different from all other state laws. Implementation guidance from Apple/Google pending.</span></td>
-    </tr>
+      <td><span class="plat-badge plat-appstore">OS / device — all software applications (including desktop)</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-os">OS / device provider</span><span class="impl-note">Operating system providers (Apple iOS, Google Android, Windows, macOS) collect age at device setup and transmit age bracket signal to developers. Covered app stores may also transmit signals. Developers are mandatory recipients of the signal — compliance obligation falls primarily on developers.</span></td>
+      <td class="age-cell">Age brackets (all users)</td>
+      <td class="method-cell"><span class="method-highlight">OS-level age bracket signal</span>. OSP prompts account holder at device setup to indicate user's birth date or age. Four brackets transmitted: under 13 / 13–15 / 16–17 / 18+. Developer must request signal from OSP or app store at app download and launch; must treat signal as "primary indicator" of age unless clear and convincing evidence contradicts it. <span class="method-note">Places primary collection burden on OSPs (Apple, Google), not individual apps. Applies to ALL software applications (including desktop), not just mobile. Developer may not share age signal with third parties for non-compliance purposes. OSP/app store has good-faith safe harbor for erroneous signals; developers do not. Unlike app store accountability laws (Utah, Texas, Louisiana), does not restrict app access or require parental consent — creates age infrastructure for other laws to use.</span></td>
+      <td class="enforcement-cell">State AG only; $2,500/negligent violation per affected child; $7,500/intentional violation per affected child. No private right of action. AG also may seek injunctive relief.</td>
+      <td><span class="status-pill status-pending">Not Yet in Effect</span><span class="status-note">Signed Oct 13, 2025 by Gov. Newsom; eff. Jan 1, 2027. Notably, Big Tech (Apple, Google) supported AB 1043 — in contrast to their opposition to the Utah/Texas/Louisiana app store laws. CCIA did not challenge this law. Gov. Newsom's signing statement acknowledged streaming providers' concerns (they argue their existing profiles already provide age-appropriate experiences) and signaled openness to a legislative fix in 2026. No legal challenge filed as of Mar 2026.</span></td>
+      <td class="sources-cell">
+  <span class="sources-label">Bill text</span>
+  <a href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260AB1043" target="_blank">AB 1043 (leginfo.ca.gov)</a>
+  <span class="sources-label">Analysis</span>
+  <a href="https://www.alstonprivacy.com/california-enacts-digital-age-verification-law/" target="_blank">Alston &amp; Bird: AB 1043 analysis</a>
+  <a href="https://www.troutmanprivacy.com/2025/10/analyzing-californias-digital-age-assurance-act/" target="_blank">Troutman: AB 1043 vs. other state laws</a>
+</td></tr>
 
     <tr data-platform="ai" data-status="active" data-age="18">
       <td class="state-cell">California</td>
       <td><span class="law-name">Companion Chat Platform Transparency Act (SB 243)</span><span class="law-cite">Cal. Health & Safety Code § 27100 et seq. (2025)</span></td>
       <td class="year-cell">2025<span class="eff-date">Sep 30, 2025</span></td>
       <td><span class="plat-badge plat-ai">AI companion chatbots</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">AI companion chatbot company (e.g., Character.AI, Replika); "knows user is a minor" standard</span></td>
       <td class="age-cell">Under 18</td>
       <td class="method-cell"><span class="method-highlight">"Knows user is a minor"</span> standard; no affirmative verification required. When minor status is known: mandatory AI disclosure, 3-hour reminder notifications, prohibition on generating/encouraging sexually explicit content for minors. <span class="method-note">First U.S. law specifically targeting AI companion platforms' interactions with minors.</span></td>
       <td class="enforcement-cell">State AG; civil penalties</td>
       <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Sep 30, 2025. Enforcement began 2026. Applies to Character.AI, Replika, and similar services.</span></td>
-    </tr>
+    
+      <td class="sources-cell">—</td></tr>
 
     <tr data-platform="social" data-status="enjoined" data-age="18">
       <td class="state-cell">Virginia</td>
       <td><span class="law-name">SB 854 (Social Media Age Verification)</span><span class="law-cite">Va. Code § 59.1-600 et seq. (2025)</span></td>
       <td class="year-cell">2025<span class="eff-date">Jan 1, 2026</span></td>
       <td><span class="plat-badge plat-social">Social media</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Social media platform; government ID or third-party verification</span></td>
       <td class="age-cell">Under 18</td>
       <td class="method-cell"><span class="method-highlight">Age verification + parental consent</span> for minors to create social media accounts. Government ID or third-party verification.</td>
       <td class="enforcement-cell">State AG; civil penalties</td>
       <td><span class="status-pill status-enjoined">Enjoined</span><span class="status-note">NetChoice v. Miyares filed Nov 2025; preliminary injunction granted shortly thereafter. Case pending as of Mar 2026.</span></td>
-    </tr>
+    
+      <td class="sources-cell">—</td></tr>
 
     <tr data-platform="social" data-status="active" data-age="18">
       <td class="state-cell">Connecticut</td>
       <td><span class="law-name">CTDPA Amendments (Sub. SB 1295 / PA 25-113)</span><span class="law-cite">Conn. Gen. Stat. § 42-520 et seq. (2025)</span></td>
       <td class="year-cell">2025<span class="eff-date">Jul 1, 2025</span></td>
       <td><span class="plat-badge plat-all">Online services — all categories</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Online service provider; data-handling obligations only — no age verification mechanism specified</span></td>
       <td class="age-cell">Under 18</td>
       <td class="method-cell"><span class="method-highlight">No explicit age verification mechanism.</span> Bans sale of minors' personal data; prohibits targeted advertising to under-18s; requires DPIAs for profiling minors. <span class="method-note">Expanded "heightened risk to minors" definition to include harassment, violence, and exploitation.</span></td>
       <td class="enforcement-cell">State AG; $5,000–$25,000/violation</td>
       <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jul 1, 2025. Complements 2023 CT law. No First Amendment challenges filed as of Mar 2026.</span></td>
-    </tr>
+    
+      <td class="sources-cell">—</td></tr>
 
     <tr data-platform="social" data-status="rulemaking" data-age="18">
       <td class="state-cell">New York</td>
       <td><span class="law-name">New York Child Data Protection Act (CDPA)</span><span class="law-cite">N.Y. Gen. Bus. Law § 899-ee et seq. (2024)</span></td>
       <td class="year-cell">2024<span class="eff-date">Jun 20, 2025</span></td>
       <td><span class="plat-badge plat-all">Online services — all operators</span></td>
+      <td class="impl-cell"><span class="impl-badge impl-service">Service provider</span><span class="impl-note">Online service provider; "actual knowledge" standard — no affirmative verification required</span></td>
       <td class="age-cell">Under 18</td>
       <td class="method-cell"><span class="method-highlight">"Actual knowledge" standard</span> — prohibits collection, use, sharing, or sale of personal data of users under 18 without informed consent or strict necessity. No affirmative age verification required. <span class="method-note">Companion to NY SAFE for Kids Act. AG ANPRM issued Aug 2024 also covered CDPA implementation.</span></td>
       <td class="enforcement-cell">State AG; $5,000/violation</td>
       <td><span class="status-pill status-active">In Effect</span><span class="status-note">Eff. Jun 20, 2025. Enforcement underway. Rulemaking continues.</span></td>
-    </tr>
+    
+      <td class="sources-cell">—</td></tr>
 
   </tbody>
 </table>
